@@ -1,3 +1,5 @@
+import { IconType } from "react-icons"
+
 export interface Project {
     id: string
     title: string
@@ -12,7 +14,7 @@ export interface Project {
   export interface Skill {
     name: string
     category: "frontend" | "backend" | "tools" | "other"
-    icon?: string
+    icon: IconType
   }
   
   export interface Experience {

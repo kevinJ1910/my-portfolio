@@ -23,3 +23,14 @@ export interface Project {
     description: string
     type: "education" | "project" | "work"
   }
+
+  export interface AboutData {
+    title: string
+    subtitle: string
+    bio: string
+    highlights: string[]
+    stats: { value: string; label: string }[]
+    chatbot: {
+      suggestedQuestions: { q: string; a: string }[]
+    }
+  }

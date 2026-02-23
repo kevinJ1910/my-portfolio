@@ -1,6 +1,12 @@
+'use client'
+
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { useState, useEffect, useRef } from "react"
+import { motion, AnimatePresence } from "motion/react"
+import { Terminal as TerminalIcon, ChevronRight, Download } from "lucide-react"
 
+// Social links
 const SOCIAL_LINKS = [
   {
     label: "GitHub",
@@ -40,114 +46,173 @@ const SOCIAL_LINKS = [
   }
 ] as const
 
-export default function Hero() {
+// Command list
+const COMMANDS = {
+  help: 'Available commands: help, about, contact, clear, skills, cv',
+  about: 'Kevin Jordan Alzate - Systems Engineering student passionate about web development.',
+  contact: 'Email: kevin.jordan@correounivalle.edu.co | GitHub: kevinJ1910',
+  skills: 'Python, JavaScript, React, Next.js, Docker, SQL...',
+  cv: 'Starting CV download...',
+  clear: ''
+}
+
+export const TerminalHero = () => {
+  const [input, setInput] = useState('')
+  const [history, setHistory] = useState<string[]>(['Welcome to Kevin’s terminal. Type "help" to get started.'])
+  const [displayText, setDisplayText] = useState('')
+  const fullText = `const developer = {
+  name: "Kevin Jordan Alzate",
+  role: "Systems Engineering student",
+  location: "Santiago de Cali, CO",
+  status: "Looking for new challenges",
+  motto: "Transforming ideas into digital experiences"
+};`
+
+// Typing effect for the terminal text
+  useEffect(() => {
+    let i = 0
+    const interval = setInterval(() => {
+      setDisplayText(fullText.slice(0, i))
+      i++
+      if (i > fullText.length) clearInterval(interval)
+    }, 30)
+    return () => clearInterval(interval)
+  }, [fullText])
+
+  // Command handling
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault()
+    const cmd = input.toLowerCase().trim()
+    if (cmd === 'clear') {
+      setHistory([])
+    } else if (cmd === 'cv') {
+      setHistory([...history, `> ${input}`, COMMANDS.cv])
+      const link = document.createElement('a')
+      link.href = '/CV.pdf'
+      link.download = 'CV.pdf'
+      link.click()
+    } else if (COMMANDS[cmd as keyof typeof COMMANDS]) {
+      setHistory([...history, `> ${input}`, COMMANDS[cmd as keyof typeof COMMANDS]])
+    } else if (cmd !== '') {
+      setHistory([...history, `> ${input}`, `Command not found: ${cmd}. Type "help" to see options.`])
+    }
+    setInput('')
+  }
+
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
-      aria-label="Hero section"
-    >
-      {/* Background grid */}
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#6366f1 1px, transparent 1px), linear-gradient(90deg, #6366f1 1px, transparent 1px)",
-          backgroundSize: "50px 50px",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.06] blur-3xl pointer-events-none"
-        style={{ background: "radial-gradient(circle, #6366f1, transparent 70%)" }}
-        aria-hidden="true"
-      />
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-3xl gap-6">
-        {/* Status badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface/60 backdrop-blur-sm">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-          <span className="text-xs font-mono text-muted-foreground">
-            Available for opportunities
-          </span>
-        </div>
-
-        {/* Name */}
-        <div className="flex flex-col gap-2">
-          <p className="text-sm font-mono text-primary tracking-widest uppercase">
-            Hi, I&apos;m
-          </p>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground tracking-tight">
-            Kevin Jordan
-          </h1>
-        </div>
-
-        {/* Title */}
-        <p className="text-lg sm:text-xl text-muted-foreground font-mono">
-          Systems Engineering Student
-          <span className="text-border mx-3">|</span>
-          <span className="text-primary">Frontend & Full Stack Developer</span>
-        </p>
-
-        {/* Description */}
-        <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl">
-          I build fast, interactive and scalable web experiences focused on{" "}
-          <span className="text-foreground">performance</span>,{" "}
-          <span className="text-foreground">usability</span> and{" "}
-          <span className="text-foreground">clean architecture</span>.
-        </p>
-
-        {/* CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
-          <Link
-            href="#projects"
-            className={cn(
-              "px-5 py-2.5 rounded-lg text-sm font-medium",
-              "bg-primary hover:bg-primary-hover text-white",
-              "transition-all duration-200",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            )}
-          >
-            View Projects
-          </Link>
-          <Link
-            href="#contact"
-            className={cn(
-              "px-5 py-2.5 rounded-lg text-sm font-medium",
-              "border border-border hover:border-primary",
-              "text-muted-foreground hover:text-primary",
-              "transition-all duration-200",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            )}
-          >
-            Get in Touch
-          </Link>
-        </div>
-
-        {/* Social links */}
-        <div className="flex items-center gap-4 mt-2">
-          {SOCIAL_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              target={link.href.startsWith("mailto") ? undefined : "_blank"}
-              rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-              className="text-muted-foreground hover:text-primary transition-colors duration-200 p-1"
-              aria-label={link.label}
+    <section className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
+      <div className="container mx-auto max-w-5xl grid lg:grid-cols-2 gap-12 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="space-y-8"
+        >
+          {/* Badge */}
+          <div className="space-y-4">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="px-4 py-2 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-bold border border-teal-500/20"
             >
-              {link.icon}
-            </Link>
-          ))}
-        </div>
-      </div>
+              Available for projects
+            </motion.span>
+            <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight">
+              Hi, I'm <span className="text-teal-500">Kevin</span>
+            </h1>
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-lg">
+              Full Stack Developer specialized in modern frontend. I build <span className="text-slate-900 dark:text-white font-bold">scalable</span>, <span className="text-slate-900 dark:text-white font-bold">optimized</span>, <span className="text-slate-900 dark:text-white font-bold">production-ready web applications</span>, prioritizing architecture, performance, and user experience.
+            </p>
+          </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40">
-        <span className="text-xs font-mono text-muted-foreground">scroll</span>
-        <div className="w-px h-8 bg-gradient-to-b from-muted-foreground to-transparent" />
+          {/*Social Links*/}
+          <div className="flex items-center justify-center lg:justify-start gap-6 mt-6 mb-8 w-full">
+            {SOCIAL_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                target={link.href.startsWith("mailto") ? undefined : "_blank"}
+                rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                className="text-muted-foreground hover:text-primary hover:scale-175 transition-all duration-300"
+                aria-label={link.label}
+              >
+                {link.icon}
+              </Link>
+            ))}
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-4">
+            <Link
+              href="#projects"
+              className="px-8 py-4 bg-slate-900 dark:bg-white dark:text-slate-900 text-white rounded-2xl font-bold hover:scale-105 transition-all shadow-xl"
+            >
+              View Projects
+            </Link>
+            <a 
+              href="/CV.pdf"
+              download="CV.pdf"
+              className="px-8 py-4 glass rounded-2xl font-bold flex items-center gap-2 hover:bg-white/20 hover:scale-105 transition-all"
+            >
+              Download CV
+              <Download size={20} />
+            </a>
+          </div>
+        </motion.div>
+
+        {/* Terminal */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="relative"
+        >
+          <div className="absolute -inset-4 bg-linear-to-tr from-teal-500/20 to-blue-500/20 rounded-2xl blur-2xl -z-10" />
+          <div className="glass rounded-2xl overflow-hidden border-white/30 dark:border-white/10 shadow-2xl">
+            {/* Terminal Header */}
+            <div className="bg-slate-900/80 px-4 py-3 flex items-center gap-2 border-b border-white/10">
+              <div className="flex gap-1.5">
+                <div className="w-3 h-3 rounded-full bg-red-500" />
+                <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                <div className="w-3 h-3 rounded-full bg-green-500" />
+              </div>
+              <div className="flex-1 text-center">
+                <span className="text-xs font-mono text-slate-400 flex items-center justify-center gap-1">
+                  <TerminalIcon size={12} />
+                  kevin-jordan — bash
+                </span>
+              </div>
+            </div>
+            
+            {/* Terminal Content */}
+            <div className="p-6 font-mono text-sm h-[400px] overflow-y-auto bg-slate-950/90 text-teal-500/90 no-scrollbar">
+              <div className="mb-4 whitespace-pre-wrap text-blue-400">
+                {displayText}
+                <span className="terminal-cursor" />
+              </div>
+              
+              <div className="space-y-1">
+                {history.map((line, i) => (
+                  <div key={i} className={line.startsWith('>') ? 'text-white' : 'text-slate-400'}>
+                    {line}
+                  </div>
+                ))}
+              </div>
+
+              {/* Input */}
+              <form onSubmit={handleCommand} className="mt-4 flex items-center gap-2">
+                <span className="text-green-500">➜</span>
+                <span className="text-blue-400">~</span>
+                <input 
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  className="flex-1 bg-transparent border-none outline-none text-white"
+                  autoFocus
+                />
+              </form>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

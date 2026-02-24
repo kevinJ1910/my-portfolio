@@ -30,3 +30,9 @@ export interface Project {
       suggestedQuestions: { q: string; a: string }[]
     }
   }
+
+  export interface ContactData {
+    name: string
+    user: string
+    url: string
+  }

@@ -1,10 +1,9 @@
 'use client'
 
 import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "motion/react"
-import { Terminal as TerminalIcon, ChevronRight, Download } from "lucide-react"
+import { useState, useEffect } from "react"
+import { motion } from "motion/react"
+import { Terminal as TerminalIcon, Download } from "lucide-react"
 
 // Social links
 const SOCIAL_LINKS = [

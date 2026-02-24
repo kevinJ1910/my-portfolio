@@ -18,9 +18,9 @@ import {
   SiVercel,
   SiFigma,
 } from "react-icons/si"
-
 import { TbBrandFirebase } from "react-icons/tb"
 
+// Skills Data
 export const skills: Skill[] = [
   // Languages
   { name: "Python", category: "other", icon: SiPython },

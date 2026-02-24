@@ -1,5 +1,6 @@
 import { AboutData } from "@/types"
 
+// About Data
 export const aboutData: AboutData = {
   title: "About me",
   subtitle: "A little bit about my background, what drives me and what I work with.",

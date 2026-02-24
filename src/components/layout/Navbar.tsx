@@ -5,8 +5,8 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { motion, AnimatePresence } from "motion/react"
 import { ThemeToggle } from "../ui/ThemeToggle"
-import { Menu, X } from "lucide-react"
 
+// Navigation links
 const NAV_LINKS = [
   { label: "Home", href: "#" },
   { label: "About", href: "#about" },
@@ -15,11 +15,12 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ] as const
 
+// Navigation bar
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState("")
 
-  // Cambia fondo al hacer scroll
+  // Change background on scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
@@ -29,7 +30,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  // Detecta sección activa con IntersectionObserver
+  // Detect active section with IntersectionObserver
   useEffect(() => {
     const sectionIds = NAV_LINKS.map((link) => link.href.replace("#", ""))
 
@@ -56,7 +57,9 @@ export default function Navbar() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
+      {/* Navigation container */}
       <nav className="container mx-auto px-6">
+        {/* Navigation bar */}
         <div className={`glass rounded-2xl px-6 py-3 flex items-center justify-between border-white/40 transition-all ${scrolled ? 'shadow-lg' : 'shadow-none'}`}>
           {/* Logo / Name */}
           <a className="text-xl font-display font-bold text-slate-900 dark:text-white">
@@ -91,7 +94,7 @@ export default function Navbar() {
 function MobileMenu({ activeSection }: { activeSection: string }) {
   const [open, setOpen] = useState(false)
 
-  // Cierra al hacer click fuera
+  // Close when clicking outside
   useEffect(() => {
     if (!open) return
     const handleClick = () => setOpen(false)
@@ -101,6 +104,7 @@ function MobileMenu({ activeSection }: { activeSection: string }) {
 
   return (
     <div className="md:hidden">
+      {/* Mobile menu button */}
       <button
         onClick={(e) => {
           e.stopPropagation()
@@ -142,6 +146,7 @@ function MobileMenu({ activeSection }: { activeSection: string }) {
             exit={{ opacity: 0, y: -20 }}
             className="absolute top-full left-0 right-0 pt-2 md:hidden"
           >
+            {/* Mobile menu links */}
             <ul className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40" role="list">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>

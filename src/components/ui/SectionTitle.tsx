@@ -1,3 +1,4 @@
+// Section Title Component
 interface SectionTitleProps {
     label: string
     title: string

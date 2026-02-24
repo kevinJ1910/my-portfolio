@@ -1,16 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { motion, useMotionValue, useSpring } from 'motion/react'
 
+// Interactive Background Component
 export const InteractiveBackground = () => {
+  // Mouse Position
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
 
+  // Spring Configuration
   const springConfig = { damping: 25, stiffness: 150 }
   const x = useSpring(mouseX, springConfig)
   const y = useSpring(mouseY, springConfig)
 
+  // Mouse Move Effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX)
@@ -22,6 +26,7 @@ export const InteractiveBackground = () => {
 
   return (
     <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
+      {/* Moving Blob */}
       <motion.div
         style={{
           x,

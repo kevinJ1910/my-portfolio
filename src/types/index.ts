@@ -1,13 +1,16 @@
 import { IconType } from "react-icons"
 
+// Types
 export interface Project {
     id: string
     title: string
+    company: string
+    date: string
     description: string
     image: string
-    tags: string[]
-    repoUrl?: string
-    liveUrl?: string
+    role: string
+    repoUrl: string
+    liveUrl: string
     featured: boolean
   }
   
@@ -15,15 +18,6 @@ export interface Project {
     name: string
     category: "frontend" | "backend" | "tools" | "other"
     icon: IconType
-  }
-  
-  export interface Experience {
-    id: string
-    title: string
-    organization: string
-    period: string
-    description: string
-    type: "education" | "project" | "work"
   }
 
   export interface AboutData {

@@ -9,7 +9,7 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply transition-colors duration-500;
   }
@@ -19,7 +19,7 @@
   .glass {
     @apply bg-white/10 dark:bg-black/20 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl;
   }
-  
+
   .glass-card {
     @apply bg-white/40 dark:bg-white/5 backdrop-blur-md border border-white/50 dark:border-white/10 shadow-xl;
   }
@@ -29,23 +29,29 @@
   }
 
   .terminal-cursor::after {
-    content: '|';
+    content: "|";
     @apply animate-pulse text-teal-500;
   }
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 @keyframes marquee {
-  from {
+  0% {
     transform: translateX(0%);
   }
-  to {
-    transform: translateX(-50%)
+  100% {
+    transform: translateX(-50%);
   }
 }
 
@@ -64,6 +70,6 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

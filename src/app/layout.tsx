@@ -5,16 +5,19 @@ import Footer from "@/components/layout/Footer"
 import LiquidBackground from "@/components/ui/LiquidBackground"
 import "./globals.css"
 
+// Geist fonts
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 })
 
+// Geist mono font
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 })
 
+// Metadata
 export const metadata: Metadata = {
   title: { 
     default: "Kevin Jordan | Frontend Developer", 
@@ -48,11 +51,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
+// Root layout
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
+      {/* Body */}
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <LiquidBackground />
         <div className="relative" style={{ zIndex: 1 }}>

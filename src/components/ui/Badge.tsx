@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 
+// Badge Component
 interface BadgeProps {
   label: string
   className?: string

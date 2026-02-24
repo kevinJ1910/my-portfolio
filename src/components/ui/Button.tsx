@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 
+// Button Component
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "outline" | "ghost"
   size?: "sm" | "md" | "lg"

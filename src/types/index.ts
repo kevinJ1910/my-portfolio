@@ -1,25 +1,32 @@
+import { IconType } from "react-icons"
+
+// Types
 export interface Project {
     id: string
     title: string
+    company: string
+    date: string
     description: string
     image: string
-    tags: string[]
-    repoUrl?: string
-    liveUrl?: string
+    role: string
+    repoUrl: string
+    liveUrl: string
     featured: boolean
   }
   
   export interface Skill {
     name: string
     category: "frontend" | "backend" | "tools" | "other"
-    icon?: string
+    icon: IconType
   }
-  
-  export interface Experience {
-    id: string
+
+  export interface AboutData {
     title: string
-    organization: string
-    period: string
-    description: string
-    type: "education" | "project" | "work"
+    subtitle: string
+    bio: string
+    highlights: string[]
+    stats: { value: string; label: string }[]
+    chatbot: {
+      suggestedQuestions: { q: string; a: string }[]
+    }
   }

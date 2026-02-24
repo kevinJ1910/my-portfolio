@@ -171,7 +171,7 @@ function ContactCard({ link }: ContactCardProps) {
     >
       {/* Icon */}
       <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110"
+        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
         style={{
           background: `${link.color}18`,
           border: `1px solid ${link.color}30`,
@@ -197,7 +197,7 @@ function ContactCard({ link }: ContactCardProps) {
       {/* Arrow */}
       <svg
         viewBox="0 0 24 24"
-        className="w-4 h-4 fill-current text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 flex-shrink-0"
+        className="w-4 h-4 fill-current text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 shrink-0"
         aria-hidden="true"
       >
         <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />

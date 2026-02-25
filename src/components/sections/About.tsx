@@ -1,141 +1,127 @@
-// src/components/sections/About.tsx
-import SectionTitle from "@/components/ui/SectionTitle"
+'use client';
 
-const STATS = [
-  { value: "3+", label: "Years coding" },
-  { value: "5+", label: "Projects built" },
-  { value: "6+", label: "Technologies" },
-] as const
-
-const HIGHLIGHTS = [
-  "React & Next.js",
-  "Firebase",
-  "Node.js & Django",
-  "Ionic & Angular",
-  "Docker",
-  "Scrum",
-] as const
+import { useState, useEffect, useRef } from "react";
+import { Bot } from "lucide-react";
+import { aboutData } from "@/data/aboutData";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function About() {
+  // Chatbot State
+  const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([
+    { role: 'bot', text: 'Hello! I’m Kevin’s assistant. What would you like to know about him?'}
+  ]);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Auto scroll to bottom
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages])
+
+  // Handle question
+  const handleQuestion = (q: string, a: string) => {
+    setMessages((prev) => [...prev, { role: 'user', text: q }]);
+    setTimeout(() => {
+      setMessages((prev) => [...prev, { role: 'bot', text: a }]);
+    }, 600);
+  }
+
   return (
-    <section
-      id="about"
-      className="relative py-24 px-6"
-      aria-label="About section"
-    >
-      <div className="max-w-5xl mx-auto">
-        <SectionTitle
-          label="About me"
-          title="Who I am"
-          subtitle="A little bit about my background, what drives me and what I work with."
-        />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-
-          {/* Avatar */}
-          <div className="flex justify-center lg:justify-end order-1 lg:order-2">
-            <div className="relative">
-              {/* Glow detrás del avatar */}
-              <div
-                className="absolute inset-0 rounded-3xl blur-2xl opacity-30 scale-110"
-                style={{
-                  background:
-                    "radial-gradient(circle, #6366f1 0%, #8b5cf6 50%, transparent 70%)",
-                }}
-                aria-hidden="true"
-              />
-
-              {/* Avatar glass container */}
-              <div className="glass relative w-56 h-56 sm:w-64 sm:h-64 rounded-3xl flex items-center justify-center overflow-hidden">
-                {/* Shimmer effect */}
-                <div
-                  className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background:
-                      "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.08) 50%, transparent 60%)",
-                  }}
-                  aria-hidden="true"
-                />
-
-                {/* Placeholder avatar */}
-                <div className="flex flex-col items-center gap-3 select-none">
-                  <div
-                    className="w-20 h-20 rounded-2xl flex items-center justify-center text-3xl font-bold text-white"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-                    }}
-                  >
-                    KJ
+    <section id="about" className="py-24 relative">
+      {/* Chatbot */}
+      <div className="container mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              {/* Title */}
+              <h2 className="text-4xl font-display font-bold mb-8">{aboutData.title}</h2>
+              {/* Bio */}
+              <div className="space-y-6 text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                <p>{aboutData.bio}</p>
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-4 pt-4">
+                  {aboutData.stats.map((stat, i) => (
+                    <div key={i} className="glass-card p-4 rounded-2xl">
+                      <h4 className="text-center font-bold text-slate-900 dark:text-white text-sm ">{stat.label}</h4>
+                      <h4 className="text-center text-2xl text-teal-500 text- font-bold mt-1">{stat.value}</h4>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              {/* Chatbot */}
+              <div className="glass rounded-[2.5rem] p-8 border-white/40 dark:border-white/10 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-teal-500 to-blue-500" />
+                
+                {/* Chatbot Header */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 rounded-2xl bg-teal-500 flex items-center justify-center text-white shadow-lg shadow-teal-500/20">
+                    <Bot size={24} />
                   </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-sm font-semibold text-foreground">
-                      Kevin Jordan
-                    </span>
-                    <span className="text-xs font-mono text-muted">
-                      Full Stack Developer
-                    </span>
+                  <div>
+                    <h3 className="font-bold text-slate-900 dark:text-white">KevinBot</h3>
+                    <p className="text-xs text-teal-500 font-bold">Online</p>
+                  </div>
+                </div>
+
+                {/* Chatbot Messages */}
+                <div
+                  ref={scrollRef}
+                  className="h-[300px] overflow-y-auto mb-6 space-y-4 pr-2 no-scrollbar"
+                >
+                  <AnimatePresence mode="popLayout">
+                    {messages.map((msg, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                      >
+                        <div className={`max-w-[80%] rounded-2xl p-4 text-sm ${msg.role === 'user'
+                          ? 'bg-teal-500 text-white rounded-tr-none'
+                          : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700'
+                          }`}>
+                          {msg.text}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+
+                {/* Chatbot Questions */}
+                <div className="space-y-2">
+                  <p className="text-xs font-bold text-slate-400 ml-1 mb-2 uppercase tracking-wider">Suggested questions:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {aboutData.chatbot.suggestedQuestions.map((item, i) => (
+                      <button
+                        key={i}
+                        onClick={() => handleQuestion(item.q, item.a)}
+                        className="text-xs cursor-pointer font-semibold px-4 py-2 rounded-xl bg-teal-50 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-500/20 hover:bg-teal-100 dark:hover:bg-teal-500/20 hover:scale-105 transition-all"
+                      >
+                        {item.q}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-
-          {/* Content */}
-          <div className="flex flex-col gap-6 order-2 lg:order-1">
-            {/* Bio */}
-            <div className="glass rounded-2xl p-6 flex flex-col gap-4">
-              <p className="text-foreground leading-relaxed">
-                I&apos;m a{" "}
-                <span className="text-primary font-medium">
-                  Systems Engineering student
-                </span>{" "}
-                at Universidad del Valle, passionate about building digital
-                products that are fast, accessible and well-crafted.
-              </p>
-              <p className="text-muted leading-relaxed text-sm">
-                I focus on the full cycle — from architecture decisions to UI
-                details. I enjoy working close to the product, thinking about
-                both the user experience and the code quality behind it.
-              </p>
-              <p className="text-muted leading-relaxed text-sm">
-                Outside of code, I&apos;m interested in product design,
-                software architecture patterns and building tools that actually
-                solve real problems.
-              </p>
-            </div>
-
-            {/* Tech highlights */}
-            <div className="flex flex-wrap gap-2">
-              {HIGHLIGHTS.map((tech) => (
-                <span
-                  key={tech}
-                  className="glass px-3 py-1.5 rounded-lg text-xs font-mono text-primary border-primary/20"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mt-12">
-          {STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="glass glass-hover rounded-2xl p-6 flex flex-col items-center gap-1 text-center"
-            >
-              <span className="text-3xl font-bold text-primary">
-                {stat.value}
-              </span>
-              <span className="text-xs text-muted font-mono">
-                {stat.label}
-              </span>
-            </div>
-          ))}
         </div>
       </div>
+      
     </section>
   )
 }

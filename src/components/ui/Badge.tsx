@@ -1,8 +1,9 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
+// Badge Component
 interface BadgeProps {
-  label: string
-  className?: string
+  label: string;
+  className?: string;
 }
 
 export default function Badge({ label, className }: BadgeProps) {

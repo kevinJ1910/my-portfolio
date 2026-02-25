@@ -1,99 +1,89 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "motion/react";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
+// Navigation links
 const NAV_LINKS = [
+  { label: "Home", href: "#" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
-] as const
+] as const;
 
+// Navigation bar
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
-  // Cambia fondo al hacer scroll
+  // Change background on scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
+      setScrolled(window.scrollY > 20);
+    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Detecta sección activa con IntersectionObserver
+  // Detect active section with IntersectionObserver
   useEffect(() => {
-    const sectionIds = NAV_LINKS.map((link) => link.href.replace("#", ""))
+    const sectionIds = NAV_LINKS.map((link) => link.href.replace("#", ""));
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            setActiveSection(entry.target.id);
           }
-        })
+        });
       },
       {
         rootMargin: "-40% 0px -55% 0px",
       }
-    )
+    ); 
 
     sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-lg"
-          : "bg-transparent"
-      )}
-    >
-      <nav
-        className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between"
-        aria-label="Main navigation"
-      >
-        {/* Logo / Name */}
-        <Link
-          href="/"
-          className="font-mono text-sm font-semibold text-foreground hover:text-primary transition-colors duration-200"
-          aria-label="Go to homepage"
-        >
-          yourname<span className="text-primary">.dev</span>
-        </Link>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
+      {/* Navigation container */}
+      <nav className="container mx-auto px-6">
+        {/* Navigation bar */}
+        <div className={`glass rounded-2xl px-6 py-3 flex items-center justify-between border-white/40 transition-all ${scrolled ? 'shadow-lg' : 'shadow-none'}`}>
+          {/* Logo / Name */}
+          <a className="text-xl font-display font-bold text-slate-900 dark:text-white">
+            KJA <span className="text-teal-500">.</span>
+          </a>
 
-        {/* Desktop links */}
-        <ul className="hidden md:flex items-center gap-1" role="list">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className={cn(
-                  "px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-200",
-                  activeSection === link.href.replace("#", "")
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-surface"
-                )}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+          {/* Desktop links */}
+          <ul className="hidden md:flex items-center gap-8" role="list">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <ThemeToggle />
+          </ul>
 
-        {/* Mobile menu button */}
-        <MobileMenu activeSection={activeSection} />
+          {/* Mobile menu button */}
+          <MobileMenu activeSection={activeSection} />
+        </div>
       </nav>
     </header>
   )
@@ -102,22 +92,23 @@ export default function Navbar() {
 // ─── Mobile Menu ─────────────────────────────────────────────────────────────
 
 function MobileMenu({ activeSection }: { activeSection: string }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  // Cierra al hacer click fuera
+  // Close when clicking outside
   useEffect(() => {
-    if (!open) return
-    const handleClick = () => setOpen(false)
-    document.addEventListener("click", handleClick)
-    return () => document.removeEventListener("click", handleClick)
-  }, [open])
+    if (!open) return;
+    const handleClick = () => setOpen(false);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [open]);
 
   return (
     <div className="md:hidden">
+      {/* Mobile menu button */}
       <button
         onClick={(e) => {
-          e.stopPropagation()
-          setOpen((prev) => !prev)
+          e.stopPropagation();
+          setOpen((prev) => !prev);
         }}
         className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
         aria-label={open ? "Close menu" : "Open menu"}
@@ -147,31 +138,31 @@ function MobileMenu({ activeSection }: { activeSection: string }) {
       </button>
 
       {/* Dropdown */}
-      {open && (
-        <div
-          className="absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border px-6 py-4"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <ul className="flex flex-col gap-1" role="list">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "block px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200",
-                    activeSection === link.href.replace("#", "")
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-surface"
-                  )}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="absolute top-full left-0 right-0 pt-2 md:hidden"
+          >
+            {/* Mobile menu links */}
+            <ul className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40" role="list">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-lg font-semibold text-slate-600 hover:text-teal-600 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

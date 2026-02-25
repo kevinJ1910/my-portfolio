@@ -1,18 +1,18 @@
-import Hero from "@/components/sections/Hero"
-import About from "@/components/sections/About"
-import Skills from "@/components/sections/Skills"
-import Projects from "@/components/sections/Projects"
-import Experience from "@/components/sections/Experience"
-import Contact from "@/components/sections/Contact"
+import {TerminalHero} from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Projects from "@/components/sections/Projects";
+import Contact from "@/components/sections/Contact";
+import { InteractiveBackground } from '@/components/ui/InteractiveBackground';
 
 export default function HomePage() {
   return (
     <main className="flex flex-col">
-      <Hero />
+      <InteractiveBackground />
+      <TerminalHero />
       <About />
       <Skills />
       <Projects />
-      <Experience />
       <Contact />
     </main>
   )

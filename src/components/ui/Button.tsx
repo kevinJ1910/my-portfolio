@@ -1,10 +1,11 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
+// Button Component
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "outline" | "ghost"
-  size?: "sm" | "md" | "lg"
-  children: React.ReactNode
-  asChild?: boolean
+  variant?: "primary" | "outline" | "ghost";
+  size?: "sm" | "md" | "lg";
+  children: React.ReactNode;
+  asChild?: boolean;
 }
 
 export default function Button({
@@ -18,13 +19,13 @@ export default function Button({
     primary: "bg-primary hover:bg-primary-hover text-white",
     outline: "border border-border hover:border-primary text-foreground hover:text-primary",
     ghost: "text-muted-foreground hover:text-foreground hover:bg-surface",
-  }
+  };
 
   const sizes = {
     sm: "px-3 py-1.5 text-sm",
     md: "px-4 py-2 text-sm",
     lg: "px-6 py-3 text-base",
-  }
+  };
 
   return (
     <button

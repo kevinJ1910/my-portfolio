@@ -1,70 +1,193 @@
-'use client'
+'use client';
 
-import Link from "next/link"
-import SectionTitle from "@/components/ui/SectionTitle"
-import { cn } from "@/lib/utils"
-import { useState } from "react"
-import { contacData } from "@/data/contactData"
-import { motion, AnimatePresence } from "motion/react"
-import { FaPaperPlane, FaEnvelope, FaPhone, FaGithub, FaMapPin } from 'react-icons/fa';
-import { IoSend } from 'react-icons/io5';
-import { Mail } from "lucide-react"
+import Link from "next/link";
+import SectionTitle from "@/components/ui/SectionTitle";
+import { useState } from "react";
+import { contacData } from "@/data/contactData";
+import { motion, AnimatePresence } from "motion/react";
+import { FaPaperPlane, FaEnvelope, FaGithub, FaLinkedin, FaInstagram  } from 'react-icons/fa';
+import { GrSend } from 'react-icons/gr';
+import { sendEmail } from "@/app/actions/sendEmail";
 
 export default function Contact() {
-  const [isTyping, setIsTyping] = useState(false)
-  const [isSend, setIsSent] = useState(false)
-  const [formData, setFormData] = useState({ name: '', email: '', message: ''})
+  const [isTyping, setIsTyping] = useState(false);
+  const [isSend, setIsSent] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: ''});
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSent(true)
-    setTimeout(() => {
-      setIsSent(false)
-      setFormData({ name: '', email: '', message: ''})
-      setIsTyping(false)
-    }, 3000)
+  //Handle Form Submit
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setIsSent(true);
+
+    //Create FormData
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("message", formData.message);
+    
+    //Send Email
+    const result = await sendEmail(data);
+    
+    //Handle Result
+    if (result.success) {
+      setTimeout(() => {
+        setIsSent(false);
+        setFormData({ name: '', email: '', message: '' });
+        setIsTyping(false);
+      }, 3000);
+    } else {
+      alert("Error al enviar el mensaje");
+      setIsSent(false);
+    }
   }
 
   return (
     <section
       id="contact"
-      className="relative py-24 px-6"
+      className="relative py-24 overflow-hidden"
       aria-label="Contact section"
     >
-      <div className="max-w-3xl mx-auto flex flex-col gap-12">
+      <div className="container mx-auto px-6 max-w-6xl">
         <SectionTitle
           label="Contact"
           title="Let's work together"
           subtitle="I'm open to new opportunities, collaborations or just a good conversation. Reach out through any of these."
         />
-
-        <div>
-          <motion.div>
-            <div>
-              <h3></h3>
-              <div>
-                <div>
+        {/*Contact Form*/}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            {/*Information*/}
+            <div className="glass-card p-8 rounded-4xl space-y-6">
+              <h3 className="text-2xl font-bold mb-4">Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <Link href={`mailto:${contacData.email.user}`} className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                    <FaEnvelope size={20}/>
+                  </Link>
                   <div>
-                    <Mail/>
-                  </div>
-                  <div>
-                    <p>Email</p>
-                    <p>{}</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase">Email</p>
+                    <p className="font-semibold">{contacData.email.user}</p>
                   </div>
                 </div>
+                <div className="flex items-center gap-4">
+                  <Link href={contacData.linkedin.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                    <FaLinkedin size={20} />
+                  </Link>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase">LinkedIn</p>
+                    <p className="font-semibold">{contacData.linkedin.user}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Link href={contacData.github.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-slate-500/10 text-slate-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                      <FaGithub size={20} />
+                    </Link>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase">GitHub</p>
+                      <p className="font-semibold">{contacData.github.user}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Link href={contacData.instagram.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                      <FaInstagram size={20} />
+                    </Link>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase">Instagram</p>
+                      <p className="font-semibold">{contacData.instagram.user}</p>
+                    </div>
+                  </div>
               </div>
             </div>
           </motion.div>
+
+          {/* Right Side: Envelope Form */}
+          <div className="relative">
+            <AnimatePresence>
+              {isSend && (
+                <motion.div
+                initial={{ opacity: 0, scale: 0.5, x: 0, y: 0}}
+                  animate={{ opacity: 1, scale: 1, x: 500, y: -500}}
+                  exit={{ opacity: 0}}
+                  transition={{ duration: 1.5, ease: "easeIn" }}
+                  className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none"
+                >
+                  <div className="text-teal-500">
+                    <FaPaperPlane size={100} className="rotate-45"/>
+                  </div>
+                  
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/*Form*/}
+            <div className="glass rounded-4xl p-8 border-white/40 dark:border-white/10 shadow-2xl relative z-10 pt-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Nombre</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({...formData, name: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Email</label>
+                  <input 
+                    type="email" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({...formData, email: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="your@email"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Message</label>
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => {
+                      setFormData({...formData, message: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="Your message"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all resize-none"
+                  />
+                </div>
+
+                {/*Send Button*/}
+                <button 
+                  className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white py-4 rounded-xl cursor-pointer font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
+                  type="submit"
+                  disabled={isSend}
+                >
+                  {isSend ? 'Sending...' : 'Send Message'}
+                  <GrSend  size={18}/>
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
-
-        
-
-        {/* Bottom note */}
-        <p className="text-center text-xs font-mono text-muted-foreground">
-          I usually respond within{" "}
-          <span className="text-primary">24 hours</span> ✦
-        </p>
       </div>
+      {/* Bottom note */}
+      <p className="text-center text-xs font-mono text-muted-foreground mt-10">
+        I usually respond within{" "}
+        <span className="text-primary">24 hours</span> ✦
+      </p>
     </section>
   )
 }
@@ -83,7 +206,7 @@ interface ContactCardProps {
 }
 
 function ContactCard({ link }: ContactCardProps) {
-  const isExternal = !link.href.startsWith("mailto")
+  const isExternal = !link.href.startsWith("mailto");
 
   return (
     <Link

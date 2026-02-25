@@ -1,31 +1,31 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useRef } from "react"
-import { Bot } from "lucide-react"
-import { aboutData } from "@/data/aboutData"
-import { motion, AnimatePresence } from "motion/react"
+import { useState, useEffect, useRef } from "react";
+import { Bot } from "lucide-react";
+import { aboutData } from "@/data/aboutData";
+import { motion, AnimatePresence } from "motion/react";
 
 export default function About() {
   // Chatbot State
   const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([
     { role: 'bot', text: 'Hello! I’m Kevin’s assistant. What would you like to know about him?'}
-  ])
+  ]);
 
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Auto scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages])
 
   // Handle question
   const handleQuestion = (q: string, a: string) => {
-    setMessages((prev) => [...prev, { role: 'user', text: q }])
+    setMessages((prev) => [...prev, { role: 'user', text: q }]);
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: 'bot', text: a }])
-    }, 600)
+      setMessages((prev) => [...prev, { role: 'bot', text: a }]);
+    }, 600);
   }
 
   return (

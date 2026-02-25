@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import SectionTitle from "@/components/ui/SectionTitle"
-import { skills } from "@/data/skills"
+import SectionTitle from "@/components/ui/SectionTitle";
+import { skills } from "@/data/skills";
 
 export default function Skills() {
   return (
@@ -17,7 +17,7 @@ export default function Skills() {
         <div className="relative overflow-hidden py-10">
           <div className="flex w-max gap-16 animate-marquee hover:[animation-play-state:paused]">
             {[...skills, ...skills].map((skill, index) => {
-              const Icon = skill.icon
+              const Icon = skill.icon;
               return (
                 // Skill Card
                 <div

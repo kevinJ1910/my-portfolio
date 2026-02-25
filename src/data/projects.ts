@@ -1,4 +1,4 @@
-import { Project } from "@/types"
+import { Project } from "@/types";
 
 // Projects Data
 export const projects: Project[] = [
@@ -24,8 +24,8 @@ export const projects: Project[] = [
       "Android app for field technicians to manage deliveries, returns and requests in real time via a corporate REST API. Includes auth, photos, digital signature and color-coded prioritization.",
     image: "/images/projects/sgs-movil.png",
     role: "Mobile Developer · Scrum Team Member",
-    repoUrl: "",
-    liveUrl: "",
+    repoUrl: "https://github.com/Ajred96/SGSMOVIL/tree/Desarrollo",
+    liveUrl: "https://github.com/Ajred96/SGSMOVIL/tree/Desarrollo",
     featured: true,
   },
   {
@@ -37,8 +37,8 @@ export const projects: Project[] = [
       "MVP for university students focused on short habits, adaptive plans and light gamification to improve wellbeing and productivity. Validated with real users.",
     image: "/images/projects/habits-app.png",
     role: "Product & Software Designer / Developer",
-    repoUrl: "https://github.com/kevinJ1910",
-    liveUrl: "",
+    repoUrl: "https://github.com/LeninCar/micro-habits-mvp-app?tab=readme-ov-file0",
+    liveUrl: "https://micro-habits-mvp-app.vercel.app/",
     featured: true,
   },
-]
+];

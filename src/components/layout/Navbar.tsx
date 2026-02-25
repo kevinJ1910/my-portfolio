@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
-import { motion, AnimatePresence } from "motion/react"
-import { ThemeToggle } from "../ui/ThemeToggle"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "motion/react";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 // Navigation links
 const NAV_LINKS = [
@@ -13,47 +13,47 @@ const NAV_LINKS = [
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
-] as const
+] as const;
 
 // Navigation bar
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   // Change background on scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
-    }
+      setScrolled(window.scrollY > 20);
+    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Detect active section with IntersectionObserver
   useEffect(() => {
-    const sectionIds = NAV_LINKS.map((link) => link.href.replace("#", ""))
+    const sectionIds = NAV_LINKS.map((link) => link.href.replace("#", ""));
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
+            setActiveSection(entry.target.id);
           }
-        })
+        });
       },
       {
         rootMargin: "-40% 0px -55% 0px",
       }
-    ) 
+    ); 
 
     sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
@@ -92,23 +92,23 @@ export default function Navbar() {
 // ─── Mobile Menu ─────────────────────────────────────────────────────────────
 
 function MobileMenu({ activeSection }: { activeSection: string }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   // Close when clicking outside
   useEffect(() => {
-    if (!open) return
-    const handleClick = () => setOpen(false)
-    document.addEventListener("click", handleClick)
-    return () => document.removeEventListener("click", handleClick)
-  }, [open])
+    if (!open) return;
+    const handleClick = () => setOpen(false);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [open]);
 
   return (
     <div className="md:hidden">
       {/* Mobile menu button */}
       <button
         onClick={(e) => {
-          e.stopPropagation()
-          setOpen((prev) => !prev)
+          e.stopPropagation();
+          setOpen((prev) => !prev);
         }}
         className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
         aria-label={open ? "Close menu" : "Open menu"}

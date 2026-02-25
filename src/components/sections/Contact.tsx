@@ -1,146 +1,193 @@
-import Link from "next/link"
-import SectionTitle from "@/components/ui/SectionTitle"
-import { cn } from "@/lib/utils"
+'use client';
 
-const CONTACT_LINKS = [
-  {
-    label: "Email",
-    value: "kevin.jordan@correounivalle.edu.co",
-    href: "mailto:kevin.jordan@correounivalle.edu.co",
-    description: "Best way to reach me",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
-        <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.909 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
-      </svg>
-    ),
-    color: "#6366f1",
-  },
-  {
-    label: "LinkedIn",
-    value: "kevin-jordan-alzate",
-    href: "https://www.linkedin.com/in/kevin-jordan-alzate-192b86366/",
-    description: "Let's connect professionally",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-      </svg>
-    ),
-    color: "#8b5cf6",
-  },
-  {
-    label: "GitHub",
-    value: "kevinJ1910",
-    href: "https://github.com/kevinJ1910",
-    description: "Check out my code",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
-        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-      </svg>
-    ),
-    color: "#06b6d4",
-  },
-  {
-    label: "Instagram",
-    value: "@kevnjordn_lz",
-    href: "https://www.instagram.com/kevnjordn_lz/",
-    description: "Follow my journey",
-    icon: (
-      <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
-        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-      </svg>
-    ),
-    color: "#ec4899",
-  },
-] as const
+import Link from "next/link";
+import SectionTitle from "@/components/ui/SectionTitle";
+import { useState } from "react";
+import { contacData } from "@/data/contactData";
+import { motion, AnimatePresence } from "motion/react";
+import { FaPaperPlane, FaEnvelope, FaGithub, FaLinkedin, FaInstagram  } from 'react-icons/fa';
+import { GrSend } from 'react-icons/gr';
+import { sendEmail } from "@/app/actions/sendEmail";
 
 export default function Contact() {
+  const [isTyping, setIsTyping] = useState(false);
+  const [isSend, setIsSent] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', message: ''});
+
+  //Handle Form Submit
+  const handleSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setIsSent(true);
+
+    //Create FormData
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("message", formData.message);
+    
+    //Send Email
+    const result = await sendEmail(data);
+    
+    //Handle Result
+    if (result.success) {
+      setTimeout(() => {
+        setIsSent(false);
+        setFormData({ name: '', email: '', message: '' });
+        setIsTyping(false);
+      }, 3000);
+    } else {
+      alert("Error al enviar el mensaje");
+      setIsSent(false);
+    }
+  }
+
   return (
     <section
       id="contact"
-      className="relative py-24 px-6"
+      className="relative py-24 overflow-hidden"
       aria-label="Contact section"
     >
-      <div className="max-w-3xl mx-auto flex flex-col gap-12">
+      <div className="container mx-auto px-6 max-w-6xl">
         <SectionTitle
           label="Contact"
           title="Let's work together"
           subtitle="I'm open to new opportunities, collaborations or just a good conversation. Reach out through any of these."
         />
-
-        {/* Main CTA card */}
-        <div
-          className="glass rounded-3xl p-8 flex flex-col items-center text-center gap-6 relative overflow-hidden"
-        >
-          {/* Glow background */}
-          <div
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at 50% 0%, #6366f1 0%, transparent 70%)",
-            }}
-            aria-hidden="true"
-          />
-
-          {/* Shimmer line top */}
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-px"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(99,102,241,0.6), transparent)",
-            }}
-            aria-hidden="true"
-          />
-
-          <div className="relative flex flex-col items-center gap-3">
-            <div
-              className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl"
-              style={{
-                background: "rgba(99,102,241,0.15)",
-                border: "1px solid rgba(99,102,241,0.3)",
-              }}
-              aria-hidden="true"
-            >
-              👋
-            </div>
-            <h3 className="text-xl font-semibold text-foreground">
-              Open to opportunities
-            </h3>
-            <p className="text-sm text-muted leading-relaxed max-w-md">
-              Currently looking for internships, freelance projects or
-              collaborations. If you have something in mind, I&apos;d love to
-              hear about it.
-            </p>
-          </div>
-
-          <Link
-            href="mailto:kevin.jordan@correounivalle.edu.co"
-            className={cn(
-              "relative px-6 py-3 rounded-xl text-sm font-medium text-white",
-              "transition-all duration-300",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            )}
-            style={{
-              background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-              boxShadow: "0 8px 24px rgba(99,102,241,0.4)",
-            }}
+        {/*Contact Form*/}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
           >
-            Say hello →
-          </Link>
-        </div>
+            {/*Information*/}
+            <div className="glass-card p-8 rounded-4xl space-y-6">
+              <h3 className="text-2xl font-bold mb-4">Information</h3>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <Link href={`mailto:${contacData.email.user}`} className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                    <FaEnvelope size={20}/>
+                  </Link>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase">Email</p>
+                    <p className="font-semibold">{contacData.email.user}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Link href={contacData.linkedin.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                    <FaLinkedin size={20} />
+                  </Link>
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase">LinkedIn</p>
+                    <p className="font-semibold">{contacData.linkedin.user}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Link href={contacData.github.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-slate-500/10 text-slate-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                      <FaGithub size={20} />
+                    </Link>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase">GitHub</p>
+                      <p className="font-semibold">{contacData.github.user}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Link href={contacData.instagram.url} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                      <FaInstagram size={20} />
+                    </Link>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase">Instagram</p>
+                      <p className="font-semibold">{contacData.instagram.user}</p>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </motion.div>
 
-        {/* Contact links grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {CONTACT_LINKS.map((link) => (
-            <ContactCard key={link.label} link={link} />
-          ))}
-        </div>
+          {/* Right Side: Envelope Form */}
+          <div className="relative">
+            <AnimatePresence>
+              {isSend && (
+                <motion.div
+                initial={{ opacity: 0, scale: 0.5, x: 0, y: 0}}
+                  animate={{ opacity: 1, scale: 1, x: 500, y: -500}}
+                  exit={{ opacity: 0}}
+                  transition={{ duration: 1.5, ease: "easeIn" }}
+                  className="absolute inset-0 flex items-center justify-center z-50 pointer-events-none"
+                >
+                  <div className="text-teal-500">
+                    <FaPaperPlane size={100} className="rotate-45"/>
+                  </div>
+                  
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-        {/* Bottom note */}
-        <p className="text-center text-xs font-mono text-muted-foreground">
-          I usually respond within{" "}
-          <span className="text-primary">24 hours</span> ✦
-        </p>
+            {/*Form*/}
+            <div className="glass rounded-4xl p-8 border-white/40 dark:border-white/10 shadow-2xl relative z-10 pt-12">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Nombre</label>
+                  <input 
+                    type="text" 
+                    required
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({...formData, name: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="Your name"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Email</label>
+                  <input 
+                    type="email" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({...formData, email: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="your@email"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Message</label>
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => {
+                      setFormData({...formData, message: e.target.value});
+                      setIsTyping(true);
+                    }}
+                    placeholder="Your message"
+                    className="w-full px-4 py-3 rounded-xl bg-white/50 dark:bg-black/20 border border-white/80 dark:border-white/10 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all resize-none"
+                  />
+                </div>
+
+                {/*Send Button*/}
+                <button 
+                  className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 text-white py-4 rounded-xl cursor-pointer font-bold flex items-center justify-center gap-2 hover:scale-[1.02] active:scale-95 transition-all shadow-xl disabled:opacity-50"
+                  type="submit"
+                  disabled={isSend}
+                >
+                  {isSend ? 'Sending...' : 'Send Message'}
+                  <GrSend  size={18}/>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
+      {/* Bottom note */}
+      <p className="text-center text-xs font-mono text-muted-foreground mt-10">
+        I usually respond within{" "}
+        <span className="text-primary">24 hours</span> ✦
+      </p>
     </section>
   )
 }
@@ -159,7 +206,7 @@ interface ContactCardProps {
 }
 
 function ContactCard({ link }: ContactCardProps) {
-  const isExternal = !link.href.startsWith("mailto")
+  const isExternal = !link.href.startsWith("mailto");
 
   return (
     <Link

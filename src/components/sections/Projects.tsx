@@ -1,15 +1,15 @@
-'use client'
+'use client';
 
-import { projects } from "@/data/projects"
-import Link from "next/link"
-import { motion } from 'motion/react'
-import { ExternalLink, Calendar, Briefcase } from 'lucide-react'
+import { projects } from "@/data/projects";
+import Link from "next/link";
+import { motion } from 'motion/react';
+import { ExternalLink, Calendar, Briefcase } from 'lucide-react';
 
 export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-24 bg-slate-50/50 dark:bg-slate-950/50"
+      className="py-24"
       aria-label="Projects section"
     >
       {/* Projects Section */}

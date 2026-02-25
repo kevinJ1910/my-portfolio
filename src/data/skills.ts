@@ -1,4 +1,4 @@
-import { Skill } from "@/types"
+import { Skill } from "@/types";
 import {
   SiPython,
   SiJavascript,
@@ -17,8 +17,8 @@ import {
   SiDocker,
   SiVercel,
   SiFigma,
-} from "react-icons/si"
-import { TbBrandFirebase } from "react-icons/tb"
+} from "react-icons/si";
+import { TbBrandFirebase } from "react-icons/tb";
 
 // Skills Data
 export const skills: Skill[] = [
@@ -49,4 +49,4 @@ export const skills: Skill[] = [
   { name: "Docker", category: "tools", icon: SiDocker },
   { name: "Vercel", category: "tools", icon: SiVercel },
   { name: "Figma", category: "tools", icon: SiFigma },
-]
+];

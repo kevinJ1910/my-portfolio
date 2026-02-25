@@ -1,9 +1,9 @@
-'use client'
+'use client';
 
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { motion } from "motion/react"
-import { Terminal as TerminalIcon, Download } from "lucide-react"
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import { Terminal as TerminalIcon, Download } from "lucide-react";
 
 // Social links
 const SOCIAL_LINKS = [
@@ -43,7 +43,7 @@ const SOCIAL_LINKS = [
       </svg>
     ),
   }
-] as const
+] as const;
 
 // Command list
 const COMMANDS = {
@@ -53,12 +53,12 @@ const COMMANDS = {
   skills: 'Python, JavaScript, React, Next.js, Docker, SQL...',
   cv: 'Starting CV download...',
   clear: ''
-}
+};
 
 export const TerminalHero = () => {
-  const [input, setInput] = useState('')
-  const [history, setHistory] = useState<string[]>(['Welcome to Kevin’s terminal. Type "help" to get started.'])
-  const [displayText, setDisplayText] = useState('')
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState<string[]>(['Welcome to Kevin’s terminal. Type "help" to get started.']);
+  const [displayText, setDisplayText] = useState('');
   const fullText = `const developer = {
   name: "Kevin Jordan Alzate",
   role: "Systems Engineering student",
@@ -69,34 +69,34 @@ export const TerminalHero = () => {
 
 // Typing effect for the terminal text
   useEffect(() => {
-    let i = 0
+    let i = 0;
     const interval = setInterval(() => {
-      setDisplayText(fullText.slice(0, i))
-      i++
-      if (i > fullText.length) clearInterval(interval)
-    }, 30)
-    return () => clearInterval(interval)
-  }, [fullText])
+      setDisplayText(fullText.slice(0, i));
+      i++;
+      if (i > fullText.length) clearInterval(interval);
+    }, 30);
+    return () => clearInterval(interval);
+  }, [fullText]);
 
   // Command handling
   const handleCommand = (e: React.FormEvent) => {
-    e.preventDefault()
-    const cmd = input.toLowerCase().trim()
+    e.preventDefault();
+    const cmd = input.toLowerCase().trim();
     if (cmd === 'clear') {
-      setHistory([])
+      setHistory([]);
     } else if (cmd === 'cv') {
-      setHistory([...history, `> ${input}`, COMMANDS.cv])
-      const link = document.createElement('a')
-      link.href = '/CV.pdf'
-      link.download = 'CV.pdf'
-      link.click()
+      setHistory([...history, `> ${input}`, COMMANDS.cv]);
+      const link = document.createElement('a');
+      link.href = '/CV.pdf';
+      link.download = 'CV.pdf';
+      link.click();
     } else if (COMMANDS[cmd as keyof typeof COMMANDS]) {
-      setHistory([...history, `> ${input}`, COMMANDS[cmd as keyof typeof COMMANDS]])
+      setHistory([...history, `> ${input}`, COMMANDS[cmd as keyof typeof COMMANDS]]);
     } else if (cmd !== '') {
-      setHistory([...history, `> ${input}`, `Command not found: ${cmd}. Type "help" to see options.`])
+      setHistory([...history, `> ${input}`, `Command not found: ${cmd}. Type "help" to see options.`]);
     }
-    setInput('')
-  }
+    setInput('');
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">

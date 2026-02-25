@@ -1,8 +1,8 @@
 // Section Title Component
 interface SectionTitleProps {
-    label: string
-    title: string
-    subtitle?: string
+    label: string;
+    title: string;
+    subtitle?: string;
   }
   
   export default function SectionTitle({ label, title, subtitle }: SectionTitleProps) {

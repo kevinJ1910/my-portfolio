@@ -1,4 +1,4 @@
-import { AboutData } from "@/types"
+import { AboutData } from "@/types";
 
 // About Data
 export const aboutData: AboutData = {
@@ -38,4 +38,4 @@ export const aboutData: AboutData = {
       }
     ],
   }
-}
+};

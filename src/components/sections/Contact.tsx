@@ -62,7 +62,7 @@ export default function Contact() {
             className="space-y-8"
           >
             {/*Information*/}
-            <div className="glass-card p-8 rounded-4xl space-y-6">
+            <div className="glass-card break-all text-sm md:text-base p-8 rounded-4xl space-y-6">
               <h3 className="text-2xl font-bold mb-4">Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
@@ -189,66 +189,5 @@ export default function Contact() {
         <span className="text-primary">24 hours</span> ✦
       </p>
     </section>
-  )
-}
-
-// ─── Contact Card ─────────────────────────────────────────────────────────────
-
-interface ContactCardProps {
-  link: {
-    label: string
-    value: string
-    href: string
-    description: string
-    icon: React.ReactNode
-    color: string
-  }
-}
-
-function ContactCard({ link }: ContactCardProps) {
-  const isExternal = !link.href.startsWith("mailto");
-
-  return (
-    <Link
-      href={link.href}
-      target={isExternal ? "_blank" : undefined}
-      rel={isExternal ? "noopener noreferrer" : undefined}
-      className="glass glass-hover rounded-2xl p-5 flex items-center gap-4 group"
-      aria-label={`Contact via ${link.label}`}
-    >
-      {/* Icon */}
-      <div
-        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
-        style={{
-          background: `${link.color}18`,
-          border: `1px solid ${link.color}30`,
-          color: link.color,
-        }}
-      >
-        {link.icon}
-      </div>
-
-      {/* Text */}
-      <div className="flex flex-col gap-0.5 min-w-0 flex-1">
-        <span className="text-xs font-mono text-muted-foreground">
-          {link.label}
-        </span>
-        <span className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors duration-200">
-          {link.value}
-        </span>
-        <span className="text-xs text-muted">
-          {link.description}
-        </span>
-      </div>
-
-      {/* Arrow */}
-      <svg
-        viewBox="0 0 24 24"
-        className="w-4 h-4 fill-current text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all duration-200 shrink-0"
-        aria-hidden="true"
-      >
-        <path d="M13.172 12l-4.95-4.95 1.414-1.414L16 12l-6.364 6.364-1.414-1.414z" />
-      </svg>
-    </Link>
   )
 }

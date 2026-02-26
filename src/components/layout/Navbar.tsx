@@ -117,7 +117,13 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm font-semibold dark:text-slate-400 hover:text-teal-600 transition-colors"
+                  className={cn(
+                    `
+                    ${navbarTextColor === 'text-white' && (link.href === '#hero' || link.href === '#about') ? '2xl:text-white' : 'text-slate-900'} 
+                    ${navbarTextColor === 'text-white' && (link.href === '#skills' || link.href === '#projects' || link.href === '#hero' || link.href === '#about') ? 'max-2xl:text-white' : 'text-slate-900'} 
+                    ${navbarTextColor === 'text-white' && (link.href === '#contact') ? 'max-xl:text-white' : 'text-slate-900'}
+                    text-sm font-semibold dark:text-slate-400 hover:text-teal-600 transition-colors`
+                  )}
                 >
                   {link.label}
                 </Link>

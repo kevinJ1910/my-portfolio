@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "motion/react";
-import { ThemeToggle } from "../ui/ThemeToggle";
 
 // Navigation links
 const NAV_LINKS = [
@@ -19,6 +18,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   // Change background on scroll
   useEffect(() => {
@@ -55,6 +55,14 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  // Close when clicking outside
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleClick = () => setIsMobileMenuOpen(false);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [isMobileMenuOpen]);
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
       {/* Navigation container */}
@@ -78,91 +86,65 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
-            <ThemeToggle />
           </ul>
 
           {/* Mobile menu button */}
-          <MobileMenu activeSection={activeSection} />
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsMobileMenuOpen((prev) => !prev);
+            }}
+            className="p-2 rounded-md text-muted-foreground md:hidden hover:text-foreground hover:bg-surface transition-colors"
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {/* Hamburger / Close icon */}
+            <div className="w-5 h-4 flex flex-col justify-between">
+              <span
+                className={cn(
+                  "block h-0.5 bg-current transition-all duration-300 origin-center",
+                  isMobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-0.5 bg-current transition-all duration-300",
+                  isMobileMenuOpen ? "opacity-0 scale-x-0" : ""
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-0.5 bg-current transition-all duration-300 origin-center",
+                  isMobileMenuOpen ? "-rotate-45 -translate-y-[9px]" : ""
+                )}
+              />
+            </div>
+          </button>
         </div>
       </nav>
-    </header>
-  )
-}
-
-// ─── Mobile Menu ─────────────────────────────────────────────────────────────
-
-function MobileMenu({ activeSection }: { activeSection: string }) {
-  const [open, setOpen] = useState(false);
-
-  // Close when clicking outside
-  useEffect(() => {
-    if (!open) return;
-    const handleClick = () => setOpen(false);
-    document.addEventListener("click", handleClick);
-    return () => document.removeEventListener("click", handleClick);
-  }, [open]);
-
-  return (
-    <div className="md:hidden">
-      {/* Mobile menu button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          setOpen((prev) => !prev);
-        }}
-        className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-expanded={open}
-      >
-        {/* Hamburger / Close icon */}
-        <div className="w-5 h-4 flex flex-col justify-between">
-          <span
-            className={cn(
-              "block h-0.5 bg-current transition-all duration-300 origin-center",
-              open ? "rotate-45 translate-y-[7px]" : ""
-            )}
-          />
-          <span
-            className={cn(
-              "block h-0.5 bg-current transition-all duration-300",
-              open ? "opacity-0 scale-x-0" : ""
-            )}
-          />
-          <span
-            className={cn(
-              "block h-0.5 bg-current transition-all duration-300 origin-center",
-              open ? "-rotate-45 -translate-y-[9px]" : ""
-            )}
-          />
-        </div>
-      </button>
-
-      {/* Dropdown */}
       <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 pt-2 md:hidden"
-          >
-            {/* Mobile menu links */}
-            <ul className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40" role="list">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="text-lg font-semibold text-slate-600 hover:text-teal-600 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="absolute top-full left-0 right-0 px-6 pt-2 md:hidden"
+              >
+                <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40">
+                  {NAV_LINKS.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-lg font-semibold text-slate-600 hover:text-teal-600 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>  
+    </header>
   )
 }

@@ -111,7 +111,7 @@ export const TerminalHero = () => {
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="px-4 py-2 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-bold border border-teal-500/20"
+              className="inline-block mb-0 mt-1 px-4 py-2 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-bold border border-teal-500/20 "
             >
               Available for projects
             </motion.span>

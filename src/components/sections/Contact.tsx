@@ -66,7 +66,7 @@ export default function Contact() {
               <h3 className="text-2xl font-bold mb-4">Information</h3>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <Link href={`mailto:${contacData.email.user}`} className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
+                  <Link href={`mailto:${contacData.email.user}`} className="w-12 h-12 shrink-0 rounded-2xl bg-teal-500/10 text-teal-600 flex items-center justify-center hover:scale-110 transition-all duration-300">
                     <FaEnvelope size={20}/>
                   </Link>
                   <div>

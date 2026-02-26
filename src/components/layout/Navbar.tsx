@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 // Navigation links
 const NAV_LINKS = [
-  { label: "Home", href: "#" },
+  { label: "Hero", href: "#hero" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
@@ -18,7 +18,8 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOverDarkElement, setIsOverDarkElement] = useState(false);
 
   // Change background on scroll
   useEffect(() => {
@@ -63,14 +64,50 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClick);
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const navbar = document.querySelector("header");
+      if (!navbar) return;
+
+      const navbarRect = navbar.getBoundingClientRect();
+      const navbarCenterY = navbarRect.top + navbarRect.height / 2;
+
+      const darkElements = document.querySelectorAll(
+        "[data-navbar-contrast='dark']"
+      );
+
+      let overlapping = false;
+
+      darkElements.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+
+        if (
+          navbarCenterY >= rect.top &&
+          navbarCenterY <= rect.bottom
+        ) {
+          overlapping = true;
+        }
+      });
+
+      setIsOverDarkElement(overlapping);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navbarTextColor = isOverDarkElement ? "text-white" : "text-slate-900";
+
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'py-4' : 'py-6'}`}>
       {/* Navigation container */}
       <nav className="container mx-auto px-6">
         {/* Navigation bar */}
-        <div className={`glass rounded-2xl px-6 py-3 flex items-center justify-between border-white/40 transition-all ${scrolled ? 'shadow-lg' : 'shadow-none'}`}>
+        <div className={`glass rounded-2xl px-6 py-3 flex items-center justify-between border-white/40 transition-all ${navbarTextColor} ${scrolled ? 'shadow-lg' : 'shadow-none'}`}>
           {/* Logo / Name */}
-          <a className="text-xl font-display font-bold text-slate-900 dark:text-white">
+          <a className={`${navbarTextColor === 'text-white' ? 'text-white lg:text-slate-900' : 'text-slate-900'} text-xl font-display font-bold dark:text-white`}>
             KJA <span className="text-teal-500">.</span>
           </a>
 
@@ -80,7 +117,7 @@ export default function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-teal-600 transition-colors"
+                  className="text-sm font-semibold dark:text-slate-400 hover:text-teal-600 transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -95,7 +132,7 @@ export default function Navbar() {
               e.stopPropagation();
               setIsMobileMenuOpen((prev) => !prev);
             }}
-            className="p-2 rounded-md text-muted-foreground md:hidden hover:text-foreground hover:bg-surface transition-colors"
+            className="p-2 rounded-md dark:text-white text-muted-foreground md:hidden hover:text-foreground hover:bg-surface transition-colors"
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
           >
@@ -131,12 +168,12 @@ export default function Navbar() {
                 exit={{ opacity: 0, y: -20 }}
                 className="absolute top-full left-0 right-0 px-6 pt-2 md:hidden"
               >
-                <div className="glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40">
+                <div className={`glass rounded-2xl p-6 flex flex-col gap-4 shadow-2xl border-white/40 ${navbarTextColor}`}>
                   {NAV_LINKS.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-lg font-semibold text-slate-600 hover:text-teal-600 transition-colors"
+                      className={`${navbarTextColor === 'text-white' ? 'text-slate-400' : 'text-slate-600'} text-lg font-semibold dark:text-slate-600 hover:text-teal-600 transition-colors`}
                     >
                       {link.label}
                     </Link>

@@ -2,21 +2,12 @@ import { AboutData } from "@/types";
 
 // About Data
 export const aboutData: AboutData = {
-  title: "About me",
-  subtitle: "A little bit about my background, what drives me and what I work with.",
+  title: "Who I am",
   bio: "I'm a Systems Engineering student at Universidad del Valle, passionate about building digital products that are fast, accessible and well-crafted. I focus on the full cycle — from architecture decisions to UI details. I enjoy working close to the product, thinking about both the user experience and the code quality behind it. Outside of code, I'm interested in product design, software architecture patterns and building tools that actually solve real problems.",
-  highlights: [
-    "React & Next.js",
-    "Firebase",
-    "Node.js & Django",
-    "Ionic & Angular",
-    "Docker",
-    "Scrum",
-  ],
   stats: [
     { value: "3+", label: "Years coding" },
-    { value: "5+", label: "Projects built" },
-    { value: "6+", label: "Technologies" },
+    { value: "6+", label: "Projects built" },
+    { value: "9+", label: "Techs" },
   ],
   chatbot: {
     suggestedQuestions: [

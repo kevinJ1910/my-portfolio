@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import LiquidBackground from "@/components/ui/LiquidBackground"
+import { ThemeProvider } from "@/components/ui/ThemeProvider"
 import "./globals.css"
 
 // Geist fonts
@@ -56,15 +57,17 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       {/* Body */}
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
-        <LiquidBackground />
-        <div className="relative" style={{ zIndex: 1 }}>
-          <Navbar />
-          {children}
-          <Footer />
-        </div>
+        <ThemeProvider>
+          <LiquidBackground />
+          <div className="relative" style={{ zIndex: 1 }}>
+            <Navbar />
+            {children}
+            <Footer />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )

@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Personal Portfolio — Frontend Developer
 
-## Getting Started
+Production-ready personal portfolio built to demonstrate modern frontend architecture, performance optimization, accessibility standards, and scalable UI engineering practices.
 
-First, run the development server:
+🔗 Live Site: https://kevin-jordan.vercel.app/
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Overview
+
+This repository contains the source code of my professional portfolio.  
+It is designed as a technical showcase, emphasizing architectural decisions, performance strategy, and user experience quality.
+
+The project is not intended as a reusable template, but as a demonstration of engineering standards applied in a real-world frontend application.
+
+---
+
+## Tech Stack
+
+- **Next.js (App Router)** — SSR/SSG capabilities and optimized routing.
+- **TypeScript** — Strict typing for maintainability and scalability.
+- **Tailwind CSS** — Utility-first styling system for structured and consistent UI.
+- **Framer Motion** — Declarative animations with performance considerations.
+- **next-themes** — Hydration-safe theme management.
+- **Vercel** — Optimized deployment and edge delivery.
+
+---
+
+## Architecture
+
+The project follows a modular and scalable structure:
+```
+src/
+├── app/
+├── components/
+├── features/
+├── lib/
+└── types/
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Architecture principles:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Clear separation of concerns
+- Reusable UI components
+- Feature-based organization
+- Scalable folder structure
+- Maintainable theming system
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Key Technical Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Server-side rendering and static optimization
+- Dark/light theme with hydration safety
+- Modular component architecture
+- Performance-first rendering strategy
+- Responsive layout system
+- Clean semantic HTML structure
+- Accessible navigation patterns
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Performance Optimization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Automatic code splitting (Next.js)
+- Optimized asset loading
+- Image optimization
+- Reduced layout shifts
+- Lighthouse-oriented implementation approach
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Accessibility
+
+- Semantic HTML structure
+- Accessible color contrast
+- Focus management considerations
+- WCAG-aware UI decisions
+
+---
+
+## SEO Implementation
+
+- Structured metadata
+- Open Graph configuration
+- Semantic markup
+- Optimized page titles and descriptions
+- Crawl-friendly structure
+
+---
+
+## Deployment
+
+The application is deployed on Vercel with optimized build configuration and production performance tuning.
+
+---
+
+## Engineering Philosophy
+
+- Architecture-driven frontend development
+- Performance as a first-class concern
+- UI as a system, not decoration
+- Scalable and maintainable codebase design
+
+---
+
+## License
+
+MIT License

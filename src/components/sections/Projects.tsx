@@ -4,6 +4,7 @@ import { projects } from "@/data/projects";
 import Link from "next/link";
 import { motion } from 'motion/react';
 import { ExternalLink, Calendar, Briefcase } from 'lucide-react';
+import SectionTitle from "../ui/SectionTitle";
 
 export default function Projects() {
   return (
@@ -12,11 +13,16 @@ export default function Projects() {
       className="py-24"
       aria-label="Projects section"
     >
+      <SectionTitle
+        label="Projects"
+        title="What I create"
+        subtitle="Take a look at the applications I’ve brought to life."
+      />
       {/* Projects Section */}
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 dark:text-white mb-4">Projects</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-slate-900 dark:text-white mb-4">Showcase</h2>
             <div className="w-20 h-1.5 bg-teal-500 mx-auto rounded-full"/>
           </div>
 
@@ -68,7 +74,7 @@ export default function Projects() {
                       href={project.liveUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition-colors text-sm font-bold"
+                      className="flex items-center gap-2 text-slate-400 hover:text-teal-600 transition-colors text-sm font-bold"
                     >
                       Details of project
                       <ExternalLink size={16} />

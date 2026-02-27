@@ -99,7 +99,7 @@ export const TerminalHero = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
+    <section id="hero" className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
       <div className="container mx-auto max-w-5xl grid lg:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -166,7 +166,10 @@ export const TerminalHero = () => {
           className="relative"
         >
           <div className="absolute -inset-4 bg-linear-to-tr from-teal-500/20 to-blue-500/20 rounded-2xl blur-2xl -z-10" />
-          <div className="glass rounded-2xl overflow-hidden border-white/30 dark:border-white/10 shadow-2xl">
+          <div 
+            className="glass rounded-2xl overflow-hidden border-white/30 dark:border-white/10 shadow-2xl"
+            data-navbar-contrast="dark"
+          >
             {/* Terminal Header */}
             <div className="bg-slate-900/80 px-4 py-3 flex items-center gap-2 border-b border-white/10">
               <div className="flex gap-1.5">
@@ -206,7 +209,6 @@ export const TerminalHero = () => {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   className="flex-1 bg-transparent border-none outline-none text-white"
-                  autoFocus
                 />
               </form>
             </div>

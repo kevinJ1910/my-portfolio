@@ -22,9 +22,7 @@ export interface Project {
 
   export interface AboutData {
     title: string;
-    subtitle: string;
     bio: string;
-    highlights: string[];
     stats: { value: string; label: string }[];
     chatbot: {
       suggestedQuestions: { q: string; a: string }[];

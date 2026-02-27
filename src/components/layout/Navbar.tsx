@@ -107,9 +107,9 @@ export default function Navbar() {
         {/* Navigation bar */}
         <div className={`glass rounded-2xl px-6 py-3 flex items-center justify-between border-white/40 transition-all ${navbarTextColor} ${scrolled ? 'shadow-lg' : 'shadow-none'}`}>
           {/* Logo / Name */}
-          <a className={`${navbarTextColor === 'text-white' ? 'text-white lg:text-slate-900' : 'text-slate-900'} text-xl font-display font-bold dark:text-white`}>
+          <Link href="#hero" className={`${navbarTextColor === 'text-white' ? 'text-white lg:text-slate-900' : 'text-slate-900'} text-xl font-display font-bold dark:text-white`}>
             KJA <span className="text-teal-500">.</span>
-          </a>
+          </Link>
 
           {/* Desktop links */}
           <ul className="hidden md:flex items-center gap-8" role="list">

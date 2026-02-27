@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import { Bot } from "lucide-react";
+import { Bot, Section } from "lucide-react";
 import { aboutData } from "@/data/aboutData";
 import { motion, AnimatePresence } from "motion/react";
+import SectionTitle from "../ui/SectionTitle";
 
 export default function About() {
   // Chatbot State
@@ -30,6 +31,11 @@ export default function About() {
 
   return (
     <section id="about" className="py-24 relative">
+      <SectionTitle
+        label="About"
+        title="Developer at work"
+        subtitle="A little bit about my background, what drives me and what I work with."
+      />
       {/* Chatbot */}
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
@@ -48,7 +54,7 @@ export default function About() {
                 <div className="grid grid-cols-3 gap-4 pt-4">
                   {aboutData.stats.map((stat, i) => (
                     <div key={i} className="glass-card p-4 rounded-2xl">
-                      <h4 className="text-center font-bold text-slate-900 dark:text-white text-sm ">{stat.label}</h4>
+                      <h4 className="text-center font-bold text-slate-900 dark:text-white text-sm min-w-0">{stat.label}</h4>
                       <h4 className="text-center text-2xl text-teal-500 text- font-bold mt-1">{stat.value}</h4>
                     </div>
                   ))}
@@ -91,7 +97,7 @@ export default function About() {
                         className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                       >
                         <div className={`max-w-[80%] rounded-2xl p-4 text-sm ${msg.role === 'user'
-                          ? 'bg-teal-500 text-white rounded-tr-none'
+                          ? 'bg-slate-900 text-white rounded-tr-none'
                           : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-700'
                           }`}>
                           {msg.text}

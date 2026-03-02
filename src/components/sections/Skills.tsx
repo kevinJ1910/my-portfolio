@@ -1,38 +1,44 @@
 'use client';
 
 import SectionTitle from "@/components/ui/SectionTitle";
-import { skills } from "@/data/skills";
+import { useMotionValue } from "motion/react";
+import { skills } from "@/data/skillsData";
+import { Bubble } from "../ui/Bubble";
 
 export default function Skills() {
+  const mouseX = useMotionValue(-1000);
+  const mouseY = useMotionValue(-1000);
+
+  const allSkills = [...skills];
+  
   return (
-    <section id="skills" className="relative py-24 px-6" aria-label="Skills section">
-      <div className="max-w-5xl mx-auto">
+    <section 
+      id="skills" 
+      className="relative py-24 px-6" 
+      aria-label="Skills section"
+      onMouseMove={(e) => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      }}
+      onMouseLeave={() => {
+        mouseX.set(-1000);
+        mouseY.set(-1000);
+      }}
+      
+    >
+      <div className="container mx-auto px-6 relative z-10">
         {/* Section Title */}
         <SectionTitle
           label="Skills"
           title="What I work with"
           subtitle="Technologies and tools I use to build products from idea to production."
         />
-        {/* Skills Marquee */}
-        <div className="relative overflow-hidden py-10">
-          <div className="flex w-max gap-16 animate-marquee hover:[animation-play-state:paused]">
-            {[...skills, ...skills].map((skill, index) => {
-              const Icon = skill.icon;
-              return (
-                // Skill Card
-                <div
-                  key={`${skill.name}-${index}`}
-                  className="group shrink-0 w-[110px] h-[110px] flex items-center justify-center rounded-2xl backdrop-blur-lg bg-white/5 dark:bg-white/10 border border-white/10 transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-105 hover:border-white/30"
-                >
-                  {/* Skill Icon */}
-                  <Icon
-                    size={44}
-                    className="transition-all duration-300 text-slate-600 dark:text-slate-300 group-hover:scale-110 group-hover:rotate-3 group-hover:drop-shadow-[0_0_14px_rgba(20,184,166,0.7)]"
-                  />
-                </div>
-              )
-            })}
-          </div>
+
+        {/* Skills Section */}
+        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 max-w-6xl mx-auto">
+          {allSkills.slice(0, 17).map((skill, index) => (
+            <Bubble key={index} skill={skill} mouseX={mouseX} mouseY={mouseY} index={index} />
+          ))}
         </div>
       </div>
     </section>

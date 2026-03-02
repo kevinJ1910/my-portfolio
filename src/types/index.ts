@@ -8,6 +8,7 @@ export interface Project {
     date: string;
     description: string;
     image: string;
+    technologies: string[];
     role: string;
     repoUrl: string;
     liveUrl: string;
@@ -16,7 +17,7 @@ export interface Project {
   
   export interface Skill {
     name: string;
-    category: "frontend" | "backend" | "tools" | "other";
+    category: "language" | "frontend" | "backend" | "tools" | "other";
     icon: IconType;
   }
 

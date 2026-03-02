@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import { Bot, Section } from "lucide-react";
+import { Bot } from "lucide-react";
 import { aboutData } from "@/data/aboutData";
-import { motion, AnimatePresence } from "motion/react";
+import { m, AnimatePresence } from "motion/react";
 import SectionTitle from "../ui/SectionTitle";
 
 export default function About() {
@@ -31,16 +31,16 @@ export default function About() {
 
   return (
     <section id="about" className="py-24 relative">
-      <SectionTitle
-        label="About"
-        title="Developer at work"
-        subtitle="A little bit about my background, what drives me and what I work with."
-      />
-      {/* Chatbot */}
       <div className="container mx-auto px-6">
+        <SectionTitle
+          label="About"
+          title="Developer at work"
+          subtitle="A little bit about my background, what drives me and what I work with."
+        />
+        {/* Chatbot */}
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -52,17 +52,17 @@ export default function About() {
                 <p>{aboutData.bio}</p>
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 pt-4">
-                  {aboutData.stats.map((stat, i) => (
-                    <div key={i} className="glass-card p-4 rounded-2xl">
+                  {aboutData.stats.map((stat) => (
+                    <div key={stat.label} className="glass-card p-4 rounded-2xl">
                       <h4 className="text-center font-bold text-slate-900 dark:text-white text-sm min-w-0">{stat.label}</h4>
                       <h4 className="text-center text-2xl text-teal-500 text- font-bold mt-1">{stat.value}</h4>
                     </div>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
             
-            <motion.div
+            <m.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -90,7 +90,7 @@ export default function About() {
                 >
                   <AnimatePresence mode="popLayout">
                     {messages.map((msg, i) => (
-                      <motion.div
+                      <m.div
                         key={i}
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -102,7 +102,7 @@ export default function About() {
                           }`}>
                           {msg.text}
                         </div>
-                      </motion.div>
+                      </m.div>
                     ))}
                   </AnimatePresence>
                 </div>
@@ -111,9 +111,9 @@ export default function About() {
                 <div className="space-y-2">
                   <p className="text-xs font-bold text-slate-400 ml-1 mb-2 uppercase tracking-wider">Suggested questions:</p>
                   <div className="flex flex-wrap gap-2">
-                    {aboutData.chatbot.suggestedQuestions.map((item, i) => (
+                    {aboutData.chatbot.suggestedQuestions.map((item) => (
                       <button
-                        key={i}
+                        key={item.q}
                         onClick={() => handleQuestion(item.q, item.a)}
                         className="text-xs cursor-pointer font-semibold px-4 py-2 rounded-xl bg-teal-50 dark:bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-100 dark:border-teal-500/20 hover:bg-teal-100 dark:hover:bg-teal-500/20 hover:scale-105 transition-all"
                       >
@@ -123,11 +123,10 @@ export default function About() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>
-      
-    </section>
+      </section>
   )
 }

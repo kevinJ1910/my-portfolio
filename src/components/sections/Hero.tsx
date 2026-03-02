@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { LazyMotion, domAnimation, m } from "motion/react";
+import { m } from "motion/react";
 import { Terminal as TerminalIcon, Download } from "lucide-react";
 
 // Social links
@@ -100,7 +100,6 @@ export const TerminalHero = () => {
   };
 
   return (
-    <LazyMotion features={domAnimation}>
     <section id="hero" className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
       <div className="container mx-auto max-w-5xl grid lg:grid-cols-2 gap-12 items-center">
         <m.div
@@ -218,6 +217,5 @@ export const TerminalHero = () => {
         </m.div>
       </div>
     </section>
-    </LazyMotion>
   )
 }

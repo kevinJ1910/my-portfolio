@@ -2,9 +2,10 @@
 
 import { projects } from "@/data/projectsData";
 import Link from "next/link";
-import { motion } from 'motion/react';
+import { m } from 'motion/react';
 import { ExternalLink, Calendar, Briefcase } from 'lucide-react';
 import SectionTitle from "../ui/SectionTitle";
+import Image from "next/image";
 
 export default function Projects() {
   return (
@@ -29,8 +30,8 @@ export default function Projects() {
           {/* Projects List */}
           <div className="space-y-12">
             {projects.map((project, index) => (
-              <motion.div
-                key={index}
+              <m.div
+                key={project.id}
                 initial={{ opacity: 0, y: 30}}
                 whileInView={{ opacity: 1, y: 0}}
                 viewport={{ once: true}}
@@ -42,7 +43,9 @@ export default function Projects() {
                   
                   {/* Image Preview (clickable) */}
                   <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="block relative w-full h-48 md:h-64 overflow-hidden">
-                    <img
+                    <Image
+                      width={1000}
+                      height={1000}
                       src={project.image}
                       alt={`Preview of ${project.title}`}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -105,7 +108,7 @@ export default function Projects() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>

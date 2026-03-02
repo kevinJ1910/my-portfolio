@@ -4,7 +4,7 @@ import Link from "next/link";
 import SectionTitle from "@/components/ui/SectionTitle";
 import { useState } from "react";
 import { contacData } from "@/data/contactData";
-import { motion, AnimatePresence } from "motion/react";
+import { m, AnimatePresence } from "motion/react";
 import { FaPaperPlane, FaEnvelope, FaGithub, FaLinkedin, FaInstagram  } from 'react-icons/fa';
 import { GrSend } from 'react-icons/gr';
 import { sendEmail } from "@/app/actions/sendEmail";
@@ -55,7 +55,7 @@ export default function Contact() {
         />
         {/*Contact Form*/}
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -103,13 +103,13 @@ export default function Contact() {
                   </div>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Right Side: Envelope Form */}
           <div className="relative">
             <AnimatePresence>
               {isSend && (
-                <motion.div
+                <m.div
                 initial={{ opacity: 0, scale: 0.5, x: 0, y: 0}}
                   animate={{ opacity: 1, scale: 1, x: 500, y: -500}}
                   exit={{ opacity: 0}}
@@ -120,7 +120,7 @@ export default function Contact() {
                     <FaPaperPlane size={100} className="rotate-45"/>
                   </div>
                   
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
 
@@ -128,10 +128,11 @@ export default function Contact() {
             <div className="glass rounded-4xl p-8 border-white/40 dark:border-white/10 shadow-2xl relative z-10 pt-12">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Nombre</label>
+                  <label htmlFor="name" className="text-xs font-bold text-slate-400 uppercase ml-1">Nombre</label>
                   <input 
                     type="text" 
                     required
+                    id="name"
                     value={formData.name}
                     onChange={(e) => {
                       setFormData({...formData, name: e.target.value});
@@ -142,10 +143,11 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Email</label>
+                  <label htmlFor="email" className="text-xs font-bold text-slate-400 uppercase ml-1">Email</label>
                   <input 
                     type="email" 
                     required
+                    id="email"
                     value={formData.email}
                     onChange={(e) => {
                       setFormData({...formData, email: e.target.value});
@@ -156,9 +158,10 @@ export default function Contact() {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-xs font-bold text-slate-400 uppercase ml-1">Message</label>
+                  <label htmlFor="message" className="text-xs font-bold text-slate-400 uppercase ml-1">Message</label>
                   <textarea
                     required
+                    id="message"
                     value={formData.message}
                     onChange={(e) => {
                       setFormData({...formData, message: e.target.value});

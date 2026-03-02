@@ -1,31 +1,16 @@
 import { Skill } from "@/types";
 import {
-  SiPython,
-  SiJavascript,
-  SiTypescript,
-  SiReact,
-  SiNextdotjs,
-  SiTailwindcss,
-  SiHtml5,
-  SiCss3,
-  SiNodedotjs,
-  SiDjango,
-  SiFirebase,
-  SiPostgresql,
-  SiSupabase,
-  SiGit,
-  SiDocker,
-  SiVercel,
-  SiFigma,
+  SiPython, SiJavascript, SiTypescript, SiReact, SiNextdotjs, SiTailwindcss, SiHtml5,
+  SiCss3, SiNodedotjs, SiDjango, SiPostgresql, SiSupabase, SiGit, SiDocker, SiVercel, SiFigma,
 } from "react-icons/si";
 import { TbBrandFirebase } from "react-icons/tb";
 
 // Skills Data
 export const skills: Skill[] = [
   // Languages
-  { name: "Python", category: "other", icon: SiPython },
-  { name: "JavaScript", category: "other", icon: SiJavascript },
-  { name: "TypeScript", category: "other", icon: SiTypescript },
+  { name: "Python", category: "language", icon: SiPython },
+  { name: "JavaScript", category: "language", icon: SiJavascript },
+  { name: "TypeScript", category: "language", icon: SiTypescript },
 
   // Frontend
   { name: "React", category: "frontend", icon: SiReact },
@@ -37,11 +22,10 @@ export const skills: Skill[] = [
   // Backend
   { name: "Node.js", category: "backend", icon: SiNodedotjs },
   { name: "Django", category: "backend", icon: SiDjango },
-  { name: "Firebase", category: "backend", icon: SiFirebase },
 
   // Database
   { name: "PostgreSQL", category: "backend", icon: SiPostgresql },
-  { name: "Firestore", category: "backend", icon: TbBrandFirebase },
+  { name: "Firebase", category: "backend", icon: TbBrandFirebase },
   { name: "Supabase", category: "backend", icon: SiSupabase },
 
   // Tools

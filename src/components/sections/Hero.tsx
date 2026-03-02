@@ -1,8 +1,8 @@
 'use client';
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect, useRef } from "react";
+import { LazyMotion, domAnimation, m } from "motion/react";
 import { Terminal as TerminalIcon, Download } from "lucide-react";
 
 // Social links
@@ -18,7 +18,7 @@ const SOCIAL_LINKS = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/kevin-jordan-alzate-192b86366/",
+    href: "https://www.linkedin.com/in/kevin-jordan-alzate/",
     icon: (
       <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current" aria-hidden="true">
         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -49,15 +49,16 @@ const SOCIAL_LINKS = [
 const COMMANDS = {
   help: 'Available commands: help, about, contact, clear, skills, cv',
   about: 'Kevin Jordan Alzate - Systems Engineering student passionate about web development.',
-  contact: 'Email: kevin.jordan@correounivalle.edu.co | GitHub: kevinJ1910',
-  skills: 'Python, JavaScript, React, Next.js, Docker, SQL...',
+  contact: 'Email: kevin.jordan@correounivalle.edu.co | GitHub: kevinJ1910 | LinkedIn: Kevin Jordan Alzate | Instagram: kevnjordn_lz ',
+  skills: 'Python, JavaScript, React, Next.js, Node.js, PostgreSQL, Git...',
   cv: 'Starting CV download...',
   clear: ''
 };
 
 export const TerminalHero = () => {
   const [input, setInput] = useState('');
-  const [history, setHistory] = useState<string[]>(['Welcome to Kevin’s terminal. Type "help" to get started.']);
+  const nextIdRef = useRef(0);
+  const [history, setHistory] = useState<Array<{id: number; text: string}>>([{ id: 0, text: 'Welcome to Kevin\u2019s terminal. Type "help" to get started.' }]);
   const [displayText, setDisplayText] = useState('');
   const fullText = `const developer = {
   name: "Kevin Jordan Alzate",
@@ -72,7 +73,7 @@ export const TerminalHero = () => {
     let i = 0;
     const interval = setInterval(() => {
       setDisplayText(fullText.slice(0, i));
-      i++;
+      i += 1;
       if (i > fullText.length) clearInterval(interval);
     }, 30);
     return () => clearInterval(interval);
@@ -85,41 +86,42 @@ export const TerminalHero = () => {
     if (cmd === 'clear') {
       setHistory([]);
     } else if (cmd === 'cv') {
-      setHistory([...history, `> ${input}`, COMMANDS.cv]);
+      setHistory(prev => [...prev, { id: ++nextIdRef.current, text: `> ${input}` }, { id: ++nextIdRef.current, text: COMMANDS.cv }]);
       const link = document.createElement('a');
       link.href = '/CV.pdf';
       link.download = 'CV.pdf';
       link.click();
     } else if (COMMANDS[cmd as keyof typeof COMMANDS]) {
-      setHistory([...history, `> ${input}`, COMMANDS[cmd as keyof typeof COMMANDS]]);
+      setHistory(prev => [...prev, { id: ++nextIdRef.current, text: `> ${input}` }, { id: ++nextIdRef.current, text: COMMANDS[cmd as keyof typeof COMMANDS] }]);
     } else if (cmd !== '') {
-      setHistory([...history, `> ${input}`, `Command not found: ${cmd}. Type "help" to see options.`]);
+      setHistory(prev => [...prev, { id: ++nextIdRef.current, text: `> ${input}` }, { id: ++nextIdRef.current, text: `Command not found: ${cmd}. Type "help" to see options.` }]);
     }
     setInput('');
   };
 
   return (
+    <LazyMotion features={domAnimation}>
     <section id="hero" className="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
       <div className="container mx-auto max-w-5xl grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           className="space-y-8"
         >
           {/* Badge */}
           <div className="space-y-4">
-            <motion.span 
+            <m.span
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="inline-block mb-0 mt-1 px-4 py-2 rounded-full bg-teal-500/10 text-teal-600 dark:text-teal-400 text-sm font-bold border border-teal-500/20 "
             >
               Available for projects
-            </motion.span>
+            </m.span>
             <h1 className="text-5xl md:text-7xl font-display font-bold leading-tight">
               Hi, I'm <span className="text-teal-500">Kevin</span>
             </h1>
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-lg">
-              Full Stack Developer specialized in modern frontend. I build <span className="text-slate-900 dark:text-white font-bold">scalable</span>, <span className="text-slate-900 dark:text-white font-bold">optimized</span>, <span className="text-slate-900 dark:text-white font-bold">production-ready web applications</span>, prioritizing architecture, performance, and user experience.
+              Frontend Developer focused on building  <span className="text-slate-900 dark:text-white font-bold">scalable</span>, <span className="text-slate-900 dark:text-white font-bold">optimized</span>, <span className="text-slate-900 dark:text-white font-bold">production-ready web applications</span>, with a strong emphasis on architecture, performance, accessibility and user experience.
             </p>
           </div>
 
@@ -147,26 +149,26 @@ export const TerminalHero = () => {
             >
               View Projects
             </Link>
-            <a 
+            <Link
               href="/CV.pdf"
               download="CV.pdf"
               className="px-8 py-4 glass rounded-2xl font-bold flex items-center gap-2 hover:bg-white/20 hover:scale-105 transition-all"
             >
               Download CV
               <Download size={20} />
-            </a>
+            </Link>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* Terminal */}
-        <motion.div
+        <m.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
           className="relative"
         >
           <div className="absolute -inset-4 bg-linear-to-tr from-teal-500/20 to-blue-500/20 rounded-2xl blur-2xl -z-10" />
-          <div 
+          <div
             className="glass rounded-2xl overflow-hidden border-white/30 dark:border-white/10 shadow-2xl"
             data-navbar-contrast="dark"
           >
@@ -184,18 +186,18 @@ export const TerminalHero = () => {
                 </span>
               </div>
             </div>
-            
+
             {/* Terminal Content */}
             <div className="p-6 font-mono text-sm h-[400px] overflow-y-auto bg-slate-950/90 text-teal-500/90 no-scrollbar">
               <div className="mb-4 whitespace-pre-wrap text-blue-400">
                 {displayText}
                 <span className="terminal-cursor" />
               </div>
-              
+
               <div className="space-y-1">
-                {history.map((line, i) => (
-                  <div key={i} className={line.startsWith('>') ? 'text-white' : 'text-slate-400'}>
-                    {line}
+                {history.map((line) => (
+                  <div key={line.id} className={line.text.startsWith('>') ? 'text-white' : 'text-slate-400'}>
+                    {line.text}
                   </div>
                 ))}
               </div>
@@ -204,7 +206,7 @@ export const TerminalHero = () => {
               <form onSubmit={handleCommand} className="mt-4 flex items-center gap-2">
                 <span className="text-green-500">➜</span>
                 <span className="text-blue-400">~</span>
-                <input 
+                <input
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
@@ -213,8 +215,9 @@ export const TerminalHero = () => {
               </form>
             </div>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
+    </LazyMotion>
   )
 }

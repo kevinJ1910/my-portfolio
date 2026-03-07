@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { motion, useMotionValue, useSpring } from 'motion/react'
+import { m, useMotionValue, useSpring } from 'motion/react'
 
 // Interactive Background Component
 export const InteractiveBackground = () => {
@@ -27,7 +27,7 @@ export const InteractiveBackground = () => {
   return (
     <div className="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
       {/* Moving Blob */}
-      <motion.div
+      <m.div
         style={{
           x,
           y,

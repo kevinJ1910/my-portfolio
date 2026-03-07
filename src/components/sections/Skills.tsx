@@ -37,7 +37,7 @@ export default function Skills() {
         {/* Skills Section */}
         <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 max-w-6xl mx-auto">
           {allSkills.slice(0, 17).map((skill, index) => (
-            <Bubble key={index} skill={skill} mouseX={mouseX} mouseY={mouseY} index={index} />
+            <Bubble key={skill.name} skill={skill} mouseX={mouseX} mouseY={mouseY} index={index + 1} />
           ))}
         </div>
       </div>

@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar"
 import Footer from "@/components/layout/Footer"
 import LiquidBackground from "@/components/ui/LiquidBackground"
 import { ThemeProvider } from "@/components/ui/ThemeProvider"
+import { MotionProvider } from "@/components/providers/MotionProvider"
 import "./globals.css"
 
 // Geist fonts
@@ -61,12 +62,14 @@ export default function RootLayout({
       {/* Body */}
       <body className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <LiquidBackground />
-          <div className="relative" style={{ zIndex: 1 }}>
-            <Navbar />
-            {children}
-            <Footer />
-          </div>
+          <MotionProvider>
+            <LiquidBackground />
+            <div className="relative" style={{ zIndex: 1 }}>
+              <Navbar />
+              {children}
+              <Footer />
+            </div>
+          </MotionProvider>
         </ThemeProvider>
       </body>
     </html>

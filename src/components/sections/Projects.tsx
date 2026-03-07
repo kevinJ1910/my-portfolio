@@ -1,13 +1,18 @@
 'use client';
 
+import { useState } from "react";
 import { projects } from "@/data/projectsData";
 import Link from "next/link";
 import { m } from 'motion/react';
-import { ExternalLink, Calendar, Briefcase } from 'lucide-react';
+import { ExternalLink, Calendar, Briefcase, FileText, Shield } from 'lucide-react';
 import SectionTitle from "../ui/SectionTitle";
 import Image from "next/image";
+import CaseStudyModal from "../ui/CaseStudyModal";
+import type { Project } from "@/types";
 
 export default function Projects() {
+  const [caseStudyProject, setCaseStudyProject] = useState<Project | null>(null);
+
   return (
     <section
       id="projects"
@@ -17,7 +22,7 @@ export default function Projects() {
       <SectionTitle
         label="Projects"
         title="What I create"
-        subtitle="Take a look at the applications I’ve brought to life."
+        subtitle="Take a look at the applications I've brought to life."
       />
       {/* Projects Section */}
       <div className="container mx-auto px-6">
@@ -41,22 +46,44 @@ export default function Projects() {
                 {/* Project Card */}
                 <div className="glass rounded-3xl border-white/60 dark:border-white/10 hover:border-teal-300 transition-all hover:shadow-2xl overflow-hidden">
                   
-                  {/* Image Preview (clickable) */}
-                  <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="block relative w-full h-48 md:h-64 overflow-hidden">
-                    <Image
-                      width={1000}
-                      height={1000}
-                      src={project.image}
-                      alt={`Preview of ${project.title}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
-                    <div className="absolute bottom-4 left-6 right-6">
-                      <h3 className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg">
-                        {project.title}
-                      </h3>
+                  {/* Image Preview */}
+                  {project.confidential ? (
+                    <div className="block relative w-full h-48 md:h-64 overflow-hidden">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        src={project.image}
+                        alt={`Preview of ${project.title}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
+                      <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
+                        <h3 className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg">
+                          {project.title}
+                        </h3>
+                        <span className="flex items-center gap-1.5 text-xs font-bold text-amber-300 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-full border border-amber-400/30">
+                          <Shield size={12} />
+                          Confidential
+                        </span>
+                      </div>
                     </div>
-                  </Link>
+                  ) : (
+                    <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="block relative w-full h-48 md:h-64 overflow-hidden">
+                      <Image
+                        width={1000}
+                        height={1000}
+                        src={project.image}
+                        alt={`Preview of ${project.title}`}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
+                      <div className="absolute bottom-4 left-6 right-6">
+                        <h3 className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg">
+                          {project.title}
+                        </h3>
+                      </div>
+                    </Link>
+                  )}
 
                   {/* Content */}
                   <div className="p-8">
@@ -84,27 +111,47 @@ export default function Projects() {
                       </li>
                     </ul>
 
+                    {/* Confidentiality Note */}
+                    {project.confidential && (
+                      <p className="mt-4 text-xs text-slate-400 dark:text-slate-500 italic flex items-center gap-1.5">
+                        <Shield size={12} className="text-amber-500/60 shrink-0" />
+                        This project was developed for a private company. Source code and live application cannot be publicly shared due to confidentiality agreements.
+                      </p>
+                    )}
+
                     {/* Technologies & Link */}
                     <div className="mt-8 pt-6 border-t border-slate-300 dark:border-white/5 flex flex-col md:flex-row md:items-center gap-3">
                       <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech, techIndex) => (
+                        {project.technologies.map((tech) => (
                           <span
-                            key={techIndex}
+                            key={tech}
                             className="text-xs px-3 py-1 rounded-full bg-teal-500/10 dark:bg-teal-400/10 text-teal-700 dark:text-teal-300 font-medium border border-teal-500/20 dark:border-teal-400/20"
                           >
                             {tech}
                           </span>
                         ))}
                       </div>
-                      <Link 
-                        href={project.repoUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center md:justify-end gap-2 text-slate-400 hover:text-teal-600 transition-colors text-sm font-bold md:ml-auto max-md:mt-2"
-                      >
-                        Details of project
-                        <ExternalLink size={16} />
-                      </Link>
+
+                      {/* Action Link */}
+                      {project.confidential ? (
+                        <button
+                          onClick={() => setCaseStudyProject(project)}
+                          className="flex items-center justify-center md:justify-end gap-2 text-slate-400 hover:text-teal-600 transition-colors text-sm font-bold md:ml-auto max-md:mt-2 cursor-pointer"
+                        >
+                          View Case Study
+                          <FileText size={16} />
+                        </button>
+                      ) : (
+                        <Link 
+                          href={project.repoUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center justify-center md:justify-end gap-2 text-slate-400 hover:text-teal-600 transition-colors text-sm font-bold md:ml-auto max-md:mt-2"
+                        >
+                          Details of project
+                          <ExternalLink size={16} />
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -136,6 +183,15 @@ export default function Projects() {
           </Link>
         </div>
       </div>
+
+      {/* Case Study Modal */}
+      {caseStudyProject && (
+        <CaseStudyModal
+          project={caseStudyProject}
+          isOpen={!!caseStudyProject}
+          onClose={() => setCaseStudyProject(null)}
+        />
+      )}
     </section>
   )
 }

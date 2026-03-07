@@ -22,13 +22,25 @@ export const projects: Project[] = [
     company: "Global System Solutions S.A.S.",
     date: "2025",
     description:
-      "Android app for field technicians to manage deliveries, returns and requests in real time via a corporate REST API. Includes auth, photos, digital signature and color-coded prioritization.",
+      "Android application developed for field technicians to manage computer equipment deliveries, returns, and service requests in real time through a corporate REST API. Includes secure authentication, photo capture, digital signatures, and a color-coded prioritization system for operational efficiency.",
     image: "/images/projects/sgs-movil.png",
     technologies: ["Angular", "Ionic", "TypeScript", "Java", "SCSS", "HTML5"],
     role: "Mobile Developer · Scrum Team Member",
-    repoUrl: "https://github.com/Ajred96/SGSMOVIL/tree/Desarrollo",
-    liveUrl: "https://github.com/Ajred96/SGSMOVIL/tree/Desarrollo",
+    repoUrl: "",
+    liveUrl: "",
     featured: true,
+    confidential: true,
+    caseStudy: {
+      location: "Santiago de Cali, Colombia",
+      overview: "SGS Mobile is an internal Android application developed to support field technicians in managing the lifecycle of company computer equipment. The app enables real-time handling of equipment deliveries, returns, and incident reports, synchronized with the company's web platform.\n\nDue to confidentiality agreements, the source code and live application cannot be publicly shared.",
+      contributions: [
+        "Developed the Android mobile application using Ionic and Angular, integrating it with the SGS Web platform through a REST API for real-time data synchronization.",
+        "Implemented secure authentication with corporate credentials, allowing technicians to access and manage assigned service requests directly from the mobile app.",
+        "Designed and implemented a color-coded prioritization system (red, yellow, green) to help technicians quickly identify critical requests and improve operational efficiency in the field.",
+        "Built features for capturing photos and collecting client digital signatures, ensuring proper documentation of equipment deliveries and service operations.",
+      ],
+      impact: "The application improved the efficiency of field operations by enabling technicians to manage equipment-related tasks directly from their mobile devices, reducing manual processes and improving real-time visibility of service requests.",
+    },
   },
   {
     id: "anti-burnout-habits",

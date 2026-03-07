@@ -8,8 +8,8 @@ import SectionTitle from "../ui/SectionTitle";
 
 export default function About() {
   // Chatbot State
-  const [messages, setMessages] = useState<{role: 'user' | 'bot', text: string}[]>([
-    { role: 'bot', text: 'Hello! I’m Kevin’s assistant. What would you like to know about him?'}
+  const [messages, setMessages] = useState<{ id: string, role: 'user' | 'bot', text: string }[]>([
+    { id: 'initial-bot-msg', role: 'bot', text: 'Hello! I’m Kevin’s assistant. What would you like to know about him?' }
   ]);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -23,9 +23,9 @@ export default function About() {
 
   // Handle question
   const handleQuestion = (q: string, a: string) => {
-    setMessages((prev) => [...prev, { role: 'user', text: q }]);
+    setMessages((prev) => [...prev, { id: `${Date.now()}-user`, role: 'user', text: q }]);
     setTimeout(() => {
-      setMessages((prev) => [...prev, { role: 'bot', text: a }]);
+      setMessages((prev) => [...prev, { id: `${Date.now()}-bot`, role: 'bot', text: a }]);
     }, 600);
   }
 
@@ -89,9 +89,9 @@ export default function About() {
                   className="h-[300px] overflow-y-auto mb-6 space-y-4 pr-2 no-scrollbar"
                 >
                   <AnimatePresence mode="popLayout">
-                    {messages.map((msg, i) => (
+                    {messages.map((msg) => (
                       <m.div
-                        key={i}
+                        key={msg.id}
                         initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}

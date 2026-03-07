@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "motion/react";
+import { m, AnimatePresence } from "motion/react";
 
 // Navigation links
 const NAV_LINKS = [
@@ -92,7 +92,7 @@ export default function Navbar() {
       setIsOverDarkElement(overlapping);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true});
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
@@ -166,9 +166,9 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
-      <AnimatePresence>
+        <AnimatePresence mode="popLayout">
             {isMobileMenuOpen && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -185,7 +185,7 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </div>
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>  
     </header>

@@ -1,4 +1,4 @@
-import { motion, useMotionValue, useSpring } from "motion/react";
+import { m, useMotionValue, useSpring } from "motion/react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
@@ -57,12 +57,12 @@ export function Bubble({ skill, mouseX, mouseY, index }: { skill: any, mouseX: a
 
     return (
         // Outer: floating animation (keyframes)
-        <motion.div
+        <m.div
             animate={{ x: floatX, y: floatY }}
             transition={{ duration: duration, repeat: Infinity, delay: delay, ease: "easeInOut" }}
         >
             {/* Inner: repulsion spring + visual bubble */}
-            <motion.div
+            <m.div
                 ref={ref}
                 style={{ x: springX, y: springY }}
                 className={`relative flex flex-col items-center justify-center rounded-full ${sizeClass} bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/30 dark:border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.1),inset_0_4px_20px_rgba(255,255,255,0.3)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_4px_20px_rgba(255,255,255,0.1)] cursor-pointer group`}
@@ -74,7 +74,7 @@ export function Bubble({ skill, mouseX, mouseY, index }: { skill: any, mouseX: a
                 <span className="text-xs md:text-sm font-bold text-slate-800 dark:text-white text-center px-2 relative z-10 leading-tight">
                     {skill.name}
                 </span>
-            </motion.div>
-        </motion.div>
+            </m.div>
+        </m.div>
     );
 }
